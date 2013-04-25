@@ -1,0 +1,12 @@
+Mparaiso\JobBoard\Entity\Affiliate:
+  type: entity
+  table: mp_jobb_affiliate
+  fields:
+    id:
+      id: true
+      type: string
+      generator:
+        strategy: AUTO
+  manyToMany:
+    categories:
+      targetEntity: Mparaiso\JobBoard\Entity\Category

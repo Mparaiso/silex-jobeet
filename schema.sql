@@ -1,0 +1,13 @@
+CREATE TABLE mp_jobb_affiliate (id VARCHAR(255) NOT NULL, url VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, token VARCHAR(255) NOT NULL, is_active BOOLEAN NOT NULL, created_at DATETIME NOT NULL, PRIMARY KEY(id));
+CREATE UNIQUE INDEX UNIQ_E1177A04E7927C74 ON mp_jobb_affiliate (email);
+CREATE TABLE affiliate_category (affiliate_id VARCHAR(255) NOT NULL, category_id INTEGER NOT NULL, PRIMARY KEY(affiliate_id, category_id));
+CREATE INDEX IDX_CEC6AF8A9F12C49A ON affiliate_category (affiliate_id);
+CREATE INDEX IDX_CEC6AF8A12469DE2 ON affiliate_category (category_id);
+CREATE TABLE mp_jobb_category (id INTEGER NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id));
+CREATE UNIQUE INDEX UNIQ_D636DDF65E237E06 ON mp_jobb_category (name);
+CREATE TABLE category_affiliate (category_id INTEGER NOT NULL, affiliate_id VARCHAR(255) NOT NULL, PRIMARY KEY(category_id, affiliate_id));
+CREATE INDEX IDX_9E1A77FF12469DE2 ON category_affiliate (category_id);
+CREATE INDEX IDX_9E1A77FF9F12C49A ON category_affiliate (affiliate_id);
+CREATE TABLE mp_jobb_job (id INTEGER NOT NULL, category_id INTEGER DEFAULT NULL, type VARCHAR(255) NOT NULL, company VARCHAR(255) NOT NULL, logo VARCHAR(255) NOT NULL, url VARCHAR(255) NOT NULL, position VARCHAR(255) NOT NULL, location VARCHAR(255) NOT NULL, description CLOB NOT NULL, how_to_apply CLOB NOT NULL, token VARCHAR(255) NOT NULL, is_public BOOLEAN NOT NULL, is_activated BOOLEAN NOT NULL, email VARCHAR(255) NOT NULL, expires_at DATETIME NOT NULL, created_at DATETIME NOT NULL, updated_at VARCHAR(255) NOT NULL, PRIMARY KEY(id));
+CREATE UNIQUE INDEX UNIQ_A6894DF15F37A13B ON mp_jobb_job (token);
+CREATE INDEX IDX_A6894DF112469DE2 ON mp_jobb_job (category_id);

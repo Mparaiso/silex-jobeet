@@ -1,0 +1,113 @@
+<?php
+
+namespace Mparaiso\JobBoard\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Mparaiso\JobBoard\Entity\Base\Category as BaseCategory;
+
+/**
+ * Category
+ */
+class Category extends BaseCategory
+{
+    /**
+     * @var integer
+     */
+    protected $id;
+
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    protected $jobs;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->jobs = new ArrayCollection();
+        $this->affiliates= new ArrayCollection();
+    }
+    
+    /**
+     * Add jobs
+     *
+     * @param \Mparaiso\JobBoard\Entity\Job $jobs
+     * @return Category
+     */
+    public function addJob(\Mparaiso\JobBoard\Entity\Job $jobs)
+    {
+        $this->jobs[] = $jobs;
+    
+        return $this;
+    }
+
+    /**
+     * Remove jobs
+     *
+     * @param \Mparaiso\JobBoard\Entity\Job $jobs
+     */
+    public function removeJob(\Mparaiso\JobBoard\Entity\Job $jobs)
+    {
+        $this->jobs->removeElement($jobs);
+    }
+
+    /**
+     * Get jobs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getJobs()
+    {
+        return $this->jobs;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    protected $affiliates;
+
+
+    /**
+     * Add affiliates
+     *
+     * @param \Mparaiso\JobBoard\Entity\Affiliate $affiliates
+     * @return Category
+     */
+    public function addAffiliate(\Mparaiso\JobBoard\Entity\Affiliate $affiliates)
+    {
+        $this->affiliates[] = $affiliates;
+    
+        return $this;
+    }
+
+    /**
+     * Remove affiliates
+     *
+     * @param \Mparaiso\JobBoard\Entity\Affiliate $affiliates
+     */
+    public function removeAffiliate(\Mparaiso\JobBoard\Entity\Affiliate $affiliates)
+    {
+        $this->affiliates->removeElement($affiliates);
+    }
+
+    /**
+     * Get affiliates
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAffiliates()
+    {
+        return $this->affiliates;
+    }
+}

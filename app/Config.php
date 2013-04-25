@@ -1,5 +1,9 @@
 <?php
 use Silex\ServiceProviderInterface;
+use Mparaiso\Provider\JobBoardServiceProvider;
+use Silex\Provider\DoctrineServiceProvider;
+use Mparaiso\Provider\DoctrineORMServiceProvider;
+use Mparaiso\Provider\ConsoleServiceProvider;
 use Silex\Application;
 
 class Config implements ServiceProviderInterface
@@ -9,7 +13,15 @@ class Config implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        // TODO: Implement register() method.
+        $app->register(new ConsoleServiceProvider());
+        $app->register(new DoctrineServiceProvider(), array(
+            "db.options" => array(
+                "driver" => "pdo_sqlite",
+                "path"   => __DIR__ . "/database.sqlite"
+            )
+        ));
+        $app->register(new DoctrineORMServiceProvider());
+        $app->register(new JobBoardServiceProvider());
     }
 
     /**

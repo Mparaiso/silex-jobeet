@@ -1,0 +1,14 @@
+Mparaiso\JobBoard\Entity\Job:
+  type: entity
+  table: mp_jobb_job
+  fields:
+    id:
+      id: true
+      type: integer
+      generator:
+        strategy: AUTO
+  manyToOne:
+    category:
+      targetEntity: Mparaiso\JobBoard\Entity\Category
+      inversedBy: jobs
+      cascade: [persist,merge]

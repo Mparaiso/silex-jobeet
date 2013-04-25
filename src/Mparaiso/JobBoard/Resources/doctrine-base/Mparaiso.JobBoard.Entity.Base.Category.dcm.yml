@@ -1,0 +1,8 @@
+Mparaiso\JobBoard\Entity\Base\Category:
+  type: mappedSuperclass
+  table: Category
+  fields:
+    name:
+      type: string
+      required: true
+      unique: true

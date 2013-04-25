@@ -1,0 +1,76 @@
+# data/fixtures/010_categories.yml
+fixtures:
+
+  - entity: Mparaiso\JobBoard\Entity\Category
+    name: design
+    fields:
+      name: Design
+
+  - entity: Mparaiso\JobBoard\Entity\Category
+    name: programming
+    fields:
+      name: Programming
+
+  - entity: Mparaiso\JobBoard\Entity\Category
+    name: manager
+    fields:
+      name: Manager
+
+  - entity: Mparaiso\JobBoard\Entity\Category
+    name: administrator
+    fields:
+      name: Administrator
+
+# data/fixtures/020_jobs.yml
+
+  - entity: Mparaiso\JobBoard\Entity\Job
+    name: job_sensio_labs
+    fields:
+      category_id:  %programming%
+      type:         full-time
+      company:      Sensio Labs
+      logo:         sensio-labs.gif
+      url:          http://www.sensiolabs.com/
+      position:     Web Developer
+      location:     Paris, France
+      description:  |
+        You've already developed websites with symfony and you want to
+        work with Open-Source technologies. You have a minimum of 3
+        years experience in web development with PHP or Java and you
+        wish to participate to development of Web 2.0 sites using the
+        best frameworks available.
+      how_to_apply: |
+        Send your resume to fabien.potencier [at] sensio.com
+      is_public:    true
+      is_activated: true
+      token:        job_sensio_labs
+      email:        job@example.com
+      expires_at:   2010-10-10
+
+  - entity: Mparaiso\JobBoard\Entity\Job
+    name: job_extreme_sensio:
+    fields:
+      category_id:  design
+      type:         part-time
+      company:      Extreme Sensio
+      logo:         extreme-sensio.gif
+      url:          http://www.extreme-sensio.com/
+      position:     Web Designer
+      location:     Paris, France
+      description:  |
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+        enim ad minim veniam, quis nostrud exercitation ullamco laboris
+        nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+        in reprehenderit in.
+
+        Voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa
+        qui officia deserunt mollit anim id est laborum.
+      how_to_apply: |
+        Send your resume to fabien.potencier [at] sensio.com
+      is_public:    true
+      is_activated: true
+      token:        job_extreme_sensio
+      email:        job@example.com
+      expires_at:   2010-10-10

@@ -1,0 +1,40 @@
+Mparaiso\JobBoard\Entity\Base\Job:
+  type: mappedSuperclass
+  table: Job
+  fields:
+    type:
+      type: string
+      required: false
+    company:
+      type: string
+    logo:
+      type: string
+      required: false
+    url:
+      type: string
+      required: false
+    position:
+      type: string
+    location:
+      type: string
+    description:
+      type: text
+    how_to_apply:
+      type: text
+    token:
+      type: string
+      unique: true
+    is_public:
+      type: boolean
+    is_activated:
+      type: boolean
+    email:
+      type: string
+    expires_at:
+      type: datetime
+    created_at:
+      type: datetime
+      required: false
+    updated_at:
+      required: false
+

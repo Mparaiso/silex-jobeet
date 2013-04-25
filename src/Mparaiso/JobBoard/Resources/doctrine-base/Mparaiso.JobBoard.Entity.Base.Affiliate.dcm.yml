@@ -1,0 +1,15 @@
+Mparaiso\JobBoard\Entity\Base\Affiliate:
+  type: mappedSuperclass
+  table: Affiliate
+  fields:
+    url:
+      type: string
+    email:
+      type: string
+      unique: true
+    token:
+      type: string
+    is_active:
+      type: boolean
+    created_at:
+      type: datetime

@@ -3,7 +3,10 @@
     "description":"Jobeet application with Silex",
     "require":{
         "silex/silex":"@dev",
-        "mparaiso/silex-extensions":"@dev",
+        "mparaiso/consoleserviceprovider":"@dev",
+        "mparaiso/doctrineormserviceprovider":"@dev",
+        "mparaiso/simpleuserserviceprovider":"@dev",
+        "mparaiso/routeconfigserviceprovider":"@dev",
         "symfony/symfony":"2.2.*",
         "doctrine/orm":"2.3.*",
         "monolog/monolog":"*",

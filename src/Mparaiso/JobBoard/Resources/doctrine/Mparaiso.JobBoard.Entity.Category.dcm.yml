@@ -1,0 +1,17 @@
+Mparaiso\JobBoard\Entity\Category:
+  type: entity
+  table: mp_jobb_category
+  fields:
+    id:
+      id: true
+      type: integer
+      generator:
+        strategy: AUTO
+  oneToMany:
+    jobs:
+      targetEntity: Mparaiso\JobBoard\Entity\Job
+      mappedBy: category
+      cascade: [persist,merge]
+  manyToMany:
+    affiliates:
+      targetEntity: Mparaiso\JobBoard\Entity\Affiliate

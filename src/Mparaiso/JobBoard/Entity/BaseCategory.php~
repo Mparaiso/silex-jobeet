@@ -1,0 +1,40 @@
+<?php
+
+namespace Mparaiso\JobBoard\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * BaseCategory
+ */
+class BaseCategory
+{
+    /**
+     * @var string
+     */
+    private $name;
+
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return BaseCategory
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+}
