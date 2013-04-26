@@ -13,12 +13,12 @@ class Affiliate extends BaseAffiliate
     /**
      * @var string
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $categories;
+    protected $categories;
 
     /**
      * Constructor

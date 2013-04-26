@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>JobBoard</title>
+    <link rel="stylesheet"
+          href="{{ app.request.baseUrl }}/static/bootstrap/css/bootstrap.min.css">
+    <style type="text/css">
+        body {
+            font-size: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="navbar navbar-inverse">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="{{ app.request.baseUrl }}/">Job Board</a>
+            <ul class="nav pull-right">
+                <li>
+                    <form action="" class="navbar-form form-search form-inline">
+                        <input class="search-query input-large" type="search" name="search" id="search"
+                               placeholder="Enter some keywords ( city , country , position )">
+                        <input class="btn btn-inverse" type="submit" value="Ask for a job">
+                    </form>
+                </li>
+                <li><a href="#">Post a Job</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        {% block flash %}
+            {% include 'crud/includes/flash.html.twig' %}
+        {% endblock %}
+    </div>
+    <div class="row">
+        {% block content %}{% endblock %}
+
+    </div>
+    <hr>
+    <footer>
+        <span>&copy; M.PARAISO</span>
+        <ul class="nav inline pull-right">
+            <li><a href="#">About Job Board</a></li>
+            <li><a href="#">Full Feed</a></li>
+            <li><a href="#">Job Board API</a></li>
+            <li><a href="#">Affiliates</a></li>
+        </ul>
+    </footer>
+</div>
+</body>
+</html>

@@ -9,7 +9,7 @@ Mparaiso\JobBoard\Entity\Base\Affiliate:
       unique: true
     token:
       type: string
-    is_active:
+    isActive:
       type: boolean
-    created_at:
+    createdAt:
       type: datetime

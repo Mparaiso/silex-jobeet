@@ -13,13 +13,17 @@ class Job extends BaseJob
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \Mparaiso\JobBoard\Entity\Category
      */
-    private $category;
+    protected $category;
 
+    function __toString()
+    {
+        return $this->position . " at " . $this->company;
+    }
 
     /**
      * Get id

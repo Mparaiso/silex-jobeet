@@ -12,27 +12,27 @@ class Affiliate
     /**
      * @var string
      */
-    private $url;
+    protected $url;
 
     /**
      * @var string
      */
-    private $email;
+    protected $email;
 
     /**
      * @var string
      */
-    private $token;
+    protected $token;
 
     /**
      * @var boolean
      */
-    private $is_active;
+    protected $is_active;
 
     /**
      * @var \DateTime
      */
-    private $created_at;
+    protected $created_at;
 
 
     /**

@@ -1,0 +1,4 @@
+{% extends app['mp.jobb.templates.layout']  %}
+{% block content %}
+    {% include 'crud/resource_read.html.twig' with {resourceName: 'job'} %}
+{% endblock %}

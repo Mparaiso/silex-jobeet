@@ -12,7 +12,7 @@ class Category
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
 
     /**

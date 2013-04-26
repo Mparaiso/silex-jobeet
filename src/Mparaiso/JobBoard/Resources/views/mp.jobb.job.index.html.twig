@@ -1,0 +1,19 @@
+{# mp.jobb.job.index.html.twig #}
+{% extends app['mp.jobb.templates.layout'] %}
+{% block content %}
+    <h3>Latest Jobs</h3>
+    <table class="table table-striped">
+        <tbody>
+        {% for job in jobs %}
+            <tr>
+                <td>{{ job.location }}</td>
+                <td>
+                    <a href="{{ path('job_detail',{id:job.id,company:job.company|slugify,location:job.location|slugify,position:job.position|slugify}) }}">
+                        {{ job.position }}
+                    </a></td>
+                <td><a href="#">{{ job.company }}</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

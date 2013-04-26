@@ -12,77 +12,77 @@ class Job
     /**
      * @var string
      */
-    private $type;
+    protected $type;
 
     /**
      * @var string
      */
-    private $company;
+    protected $company;
 
     /**
      * @var string
      */
-    private $logo;
+    protected $logo;
 
     /**
      * @var string
      */
-    private $url;
+    protected $url;
 
     /**
      * @var string
      */
-    private $position;
+    protected $position;
 
     /**
      * @var string
      */
-    private $location;
+    protected $location;
 
     /**
      * @var string
      */
-    private $description;
+    protected $description;
 
     /**
      * @var string
      */
-    private $how_to_apply;
+    protected $how_to_apply;
 
     /**
      * @var string
      */
-    private $token;
+    protected $token;
 
     /**
      * @var boolean
      */
-    private $is_public;
+    protected $is_public;
 
     /**
      * @var boolean
      */
-    private $is_activated;
+    protected $is_activated;
 
     /**
      * @var string
      */
-    private $email;
+    protected $email;
 
     /**
      * @var \DateTime
      */
-    private $expires_at;
+    protected $expires_at;
 
     /**
      * @var \DateTime
      */
-    private $created_at;
+    protected $created_at;
 
     /**
      * @var string
      */
-    private $updated_at;
+    protected $updated_at;
 
 
     /**

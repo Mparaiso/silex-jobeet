@@ -5,36 +5,41 @@ Mparaiso\JobBoard\Entity\Base\Job:
     type:
       type: string
       required: false
+      nullable: true
     company:
       type: string
     logo:
       type: string
       required: false
+      nullable: true
     url:
       type: string
       required: false
+      nullable: true
     position:
       type: string
     location:
       type: string
     description:
       type: text
-    how_to_apply:
+    howToApply:
       type: text
     token:
       type: string
       unique: true
-    is_public:
+    isPublic:
       type: boolean
-    is_activated:
+    isActivated:
       type: boolean
     email:
       type: string
-    expires_at:
+    expiresAt:
       type: datetime
-    created_at:
+    createdAt:
       type: datetime
       required: false
-    updated_at:
+      nullable: true
+    updatedAt:
       required: false
+      nullable: true
 

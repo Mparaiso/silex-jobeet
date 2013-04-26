@@ -1,0 +1,17 @@
+#routes
+home:
+  path: /
+  defaults : { _controller: mp.jobb.controller.job:index  ,format: html }
+
+job_detail:
+  path: /{company}/{location}/{id}/{position}
+  defaults: { _controller: mp.jobb.controller.job:read }
+  methods: [GET]
+  requirements:
+    id: \d+
+
+
+
+admin.job:
+  prefix: /admin/job
+  resource: admin.job.yml

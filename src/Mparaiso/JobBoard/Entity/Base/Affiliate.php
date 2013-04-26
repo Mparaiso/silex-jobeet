@@ -25,15 +25,14 @@ class Affiliate
     protected $token;
 
     /**
-     * @var boolean
-     */
-    protected $is_active;
-
-    /**
      * @var \DateTime
      */
-    protected $created_at;
+    protected $createdAt;
 
+    public function __toString()
+    {
+        return $this->getUrl();
+    }
 
     /**
      * Set url
@@ -44,14 +43,14 @@ class Affiliate
     public function setUrl($url)
     {
         $this->url = $url;
-    
+
         return $this;
     }
 
     /**
      * Get url
      *
-     * @return string 
+     * @return string
      */
     public function getUrl()
     {
@@ -67,14 +66,14 @@ class Affiliate
     public function setEmail($email)
     {
         $this->email = $email;
-    
+
         return $this;
     }
 
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -90,14 +89,14 @@ class Affiliate
     public function setToken($token)
     {
         $this->token = $token;
-    
+
         return $this;
     }
 
     /**
      * Get token
      *
-     * @return string 
+     * @return string
      */
     public function getToken()
     {
@@ -105,48 +104,55 @@ class Affiliate
     }
 
     /**
-     * Set is_active
+     * Set isActive
      *
      * @param boolean $isActive
      * @return Affiliate
      */
     public function setIsActive($isActive)
     {
-        $this->is_active = $isActive;
-    
+        $this->isActive = $isActive;
+
         return $this;
     }
 
     /**
-     * Get is_active
+     * Get isActive
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsActive()
     {
-        return $this->is_active;
+        return $this->isActive;
     }
 
     /**
-     * Set created_at
+     * Set createdAt
      *
      * @param \DateTime $createdAt
      * @return Affiliate
      */
     public function setCreatedAt($createdAt)
     {
-        $this->created_at = $createdAt;
-    
+        $this->createdAt = $createdAt;
+
         return $this;
     }
 
     /**
-     * Get created_at
+     * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
+
+    /**
+     * @var boolean
+     */
+    private $isActive;
+
+
 }

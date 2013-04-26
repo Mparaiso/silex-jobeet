@@ -26,7 +26,7 @@ fixtures:
   - entity: Mparaiso\JobBoard\Entity\Job
     name: job_sensio_labs
     fields:
-      category_id:  %programming%
+      category:  %programming%
       type:         full-time
       company:      Sensio Labs
       logo:         sensio-labs.gif
@@ -39,18 +39,18 @@ fixtures:
         years experience in web development with PHP or Java and you
         wish to participate to development of Web 2.0 sites using the
         best frameworks available.
-      how_to_apply: |
+      howToApply: |
         Send your resume to fabien.potencier [at] sensio.com
-      is_public:    true
-      is_activated: true
+      isPublic:    true
+      isActivated: true
       token:        job_sensio_labs
       email:        job@example.com
-      expires_at:   2010-10-10
+      expiresAt:  {datetime : 2010-10-10 }
 
   - entity: Mparaiso\JobBoard\Entity\Job
     name: job_extreme_sensio:
     fields:
-      category_id:  design
+      category:    %design%
       type:         part-time
       company:      Extreme Sensio
       logo:         extreme-sensio.gif
@@ -67,10 +67,10 @@ fixtures:
         Voluptate velit esse cillum dolore eu fugiat nulla pariatur.
         Excepteur sint occaecat cupidatat non proident, sunt in culpa
         qui officia deserunt mollit anim id est laborum.
-      how_to_apply: |
+      howToApply: |
         Send your resume to fabien.potencier [at] sensio.com
-      is_public:    true
-      is_activated: true
+      isPublic:    true
+      isActivated: true
       token:        job_extreme_sensio
       email:        job@example.com
-      expires_at:   2010-10-10
+      expiresAt:   { datetime : 2010-10-10 }

@@ -3,6 +3,7 @@
 namespace Mparaiso\JobBoard\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Mparaiso\JobBoard\Entity\Base\Category as BaseCategory;
 
 /**
@@ -13,7 +14,7 @@ class Category extends BaseCategory
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
 
     /**
@@ -28,14 +29,19 @@ class Category extends BaseCategory
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $jobs;
+    protected $jobs;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->jobs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->jobs = new ArrayCollection();
+        $this->affiliates= new ArrayCollection();
+    }
+
+    function __toString(){
+        return $this->name;
     }
     
     /**
@@ -69,5 +75,43 @@ class Category extends BaseCategory
     public function getJobs()
     {
         return $this->jobs;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    protected $affiliates;
+
+
+    /**
+     * Add affiliates
+     *
+     * @param \Mparaiso\JobBoard\Entity\Affiliate $affiliates
+     * @return Category
+     */
+    public function addAffiliate(\Mparaiso\JobBoard\Entity\Affiliate $affiliates)
+    {
+        $this->affiliates[] = $affiliates;
+    
+        return $this;
+    }
+
+    /**
+     * Remove affiliates
+     *
+     * @param \Mparaiso\JobBoard\Entity\Affiliate $affiliates
+     */
+    public function removeAffiliate(\Mparaiso\JobBoard\Entity\Affiliate $affiliates)
+    {
+        $this->affiliates->removeElement($affiliates);
+    }
+
+    /**
+     * Get affiliates
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAffiliates()
+    {
+        return $this->affiliates;
     }
 }

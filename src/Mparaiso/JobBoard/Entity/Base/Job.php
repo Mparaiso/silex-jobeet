@@ -47,7 +47,7 @@ class Job
     /**
      * @var string
      */
-    protected $how_to_apply;
+    protected $howToApply;
 
     /**
      * @var string
@@ -57,12 +57,12 @@ class Job
     /**
      * @var boolean
      */
-    protected $is_public;
+    protected $isPublic;
 
     /**
      * @var boolean
      */
-    protected $is_activated;
+    protected $isActivated;
 
     /**
      * @var string
@@ -72,19 +72,22 @@ class Job
     /**
      * @var \DateTime
      */
-    protected $expires_at;
+    protected $expiresAt;
 
     /**
      * @var \DateTime
      */
-    protected $created_at;
+    protected $createdAt;
 
     /**
      * @var string
      */
-    protected $updated_at;
+    protected $updatedAt;
 
-
+    function __toString()
+    {
+        return sprintf("%s at %s (%s)",$this->getPosition(),$this->getCompany(),$this->getLocation());
+    }
     /**
      * Set type
      *
@@ -94,14 +97,14 @@ class Job
     public function setType($type)
     {
         $this->type = $type;
-    
+
         return $this;
     }
 
     /**
      * Get type
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {
@@ -117,14 +120,14 @@ class Job
     public function setCompany($company)
     {
         $this->company = $company;
-    
+
         return $this;
     }
 
     /**
      * Get company
      *
-     * @return string 
+     * @return string
      */
     public function getCompany()
     {
@@ -140,14 +143,14 @@ class Job
     public function setLogo($logo)
     {
         $this->logo = $logo;
-    
+
         return $this;
     }
 
     /**
      * Get logo
      *
-     * @return string 
+     * @return string
      */
     public function getLogo()
     {
@@ -163,14 +166,14 @@ class Job
     public function setUrl($url)
     {
         $this->url = $url;
-    
+
         return $this;
     }
 
     /**
      * Get url
      *
-     * @return string 
+     * @return string
      */
     public function getUrl()
     {
@@ -186,14 +189,14 @@ class Job
     public function setPosition($position)
     {
         $this->position = $position;
-    
+
         return $this;
     }
 
     /**
      * Get position
      *
-     * @return string 
+     * @return string
      */
     public function getPosition()
     {
@@ -209,14 +212,14 @@ class Job
     public function setLocation($location)
     {
         $this->location = $location;
-    
+
         return $this;
     }
 
     /**
      * Get location
      *
-     * @return string 
+     * @return string
      */
     public function getLocation()
     {
@@ -232,14 +235,14 @@ class Job
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -247,26 +250,26 @@ class Job
     }
 
     /**
-     * Set how_to_apply
+     * Set howToApply
      *
      * @param string $howToApply
      * @return Job
      */
     public function setHowToApply($howToApply)
     {
-        $this->how_to_apply = $howToApply;
-    
+        $this->howToApply = $howToApply;
+
         return $this;
     }
 
     /**
-     * Get how_to_apply
+     * Get howToApply
      *
-     * @return string 
+     * @return string
      */
     public function getHowToApply()
     {
-        return $this->how_to_apply;
+        return $this->howToApply;
     }
 
     /**
@@ -278,14 +281,14 @@ class Job
     public function setToken($token)
     {
         $this->token = $token;
-    
+
         return $this;
     }
 
     /**
      * Get token
      *
-     * @return string 
+     * @return string
      */
     public function getToken()
     {
@@ -293,49 +296,49 @@ class Job
     }
 
     /**
-     * Set is_public
+     * Set isPublic
      *
      * @param boolean $isPublic
      * @return Job
      */
     public function setIsPublic($isPublic)
     {
-        $this->is_public = $isPublic;
-    
+        $this->isPublic = $isPublic;
+
         return $this;
     }
 
     /**
-     * Get is_public
+     * Get isPublic
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsPublic()
     {
-        return $this->is_public;
+        return $this->isPublic;
     }
 
     /**
-     * Set is_activated
+     * Set isActivated
      *
      * @param boolean $isActivated
      * @return Job
      */
     public function setIsActivated($isActivated)
     {
-        $this->is_activated = $isActivated;
-    
+        $this->isActivated = $isActivated;
+
         return $this;
     }
 
     /**
-     * Get is_activated
+     * Get isActivated
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsActivated()
     {
-        return $this->is_activated;
+        return $this->isActivated;
     }
 
     /**
@@ -347,14 +350,14 @@ class Job
     public function setEmail($email)
     {
         $this->email = $email;
-    
+
         return $this;
     }
 
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -362,71 +365,73 @@ class Job
     }
 
     /**
-     * Set expires_at
+     * Set expiresAt
      *
      * @param \DateTime $expiresAt
      * @return Job
      */
     public function setExpiresAt($expiresAt)
     {
-        $this->expires_at = $expiresAt;
-    
+        $this->expiresAt = $expiresAt;
+
         return $this;
     }
 
     /**
-     * Get expires_at
+     * Get expiresAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getExpiresAt()
     {
-        return $this->expires_at;
+        return $this->expiresAt;
     }
 
     /**
-     * Set created_at
+     * Set createdAt
      *
      * @param \DateTime $createdAt
      * @return Job
      */
     public function setCreatedAt($createdAt)
     {
-        $this->created_at = $createdAt;
-    
+        $this->createdAt = $createdAt;
+
         return $this;
     }
 
     /**
-     * Get created_at
+     * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * Set updated_at
+     * Set updatedAt
      *
      * @param string $updatedAt
      * @return Job
      */
     public function setUpdatedAt($updatedAt)
     {
-        $this->updated_at = $updatedAt;
-    
+        $this->updatedAt = $updatedAt;
+
         return $this;
     }
 
     /**
-     * Get updated_at
+     * Get updatedAt
      *
-     * @return string 
+     * @return string
      */
     public function getUpdatedAt()
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
+
+
 }

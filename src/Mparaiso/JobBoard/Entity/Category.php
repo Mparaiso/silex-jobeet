@@ -39,6 +39,8 @@ class Category extends BaseCategory
         $this->jobs = new ArrayCollection();
         $this->affiliates= new ArrayCollection();
     }
+
+
     
     /**
      * Add jobs
