@@ -4,7 +4,7 @@ Mparaiso\JobBoard\Entity\Affiliate:
   fields:
     id:
       id: true
-      type: string
+      type: integer
       generator:
         strategy: AUTO
   manyToMany:

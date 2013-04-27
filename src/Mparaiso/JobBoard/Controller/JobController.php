@@ -3,6 +3,11 @@
 namespace Mparaiso\JobBoard\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\EventDispatcher\GenericEvent;
+use Mparaiso\JobBoard\Entity\Base\Job;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Form\Form;
 use Silex\Application;
 
 class JobController
@@ -14,7 +19,7 @@ class JobController
         $this->jobService = $jobService;
     }
 
-    function index(Application $app, Request $req,$format)
+    function index(Application $app, Request $req, $format)
     {
         $limit = 10;
         $offset = 0;
@@ -34,4 +39,36 @@ class JobController
             "job" => $job,
         ));
     }
+
+    function create(Application $app, Request $req, $format)
+    {
+        $job = new $app['mp.jobb.entity.job'];
+        $type = new  $app['mp.jobb.form.job'];
+        $form = $app['form.factory']->create($type, $job);
+        /* @var $form Form */
+        if ("POST" === $req->getMethod()) {
+            $form->bind($req);
+            if ($form->isValid()) {
+                // upload logo
+                if ($form->get('logo_file')->getData() != NULL) {
+                    $logoFile = $form->get('logo_file')->getData();
+                    /* @var $logoFile UploadedFile */
+                    $logoFileName = $logoFile->getClientOriginalName() . uniqid("_");
+                    $logoFile->move(
+                        $app['mp.jobb.params.upload_dir'],
+                        $logoFileName
+                    );
+                    $job->setLogo($logoFileName);
+                }
+                $app['dispatcher']->dispatch('job_before_create', new GenericEvent($job));
+                $app['mp.jobb.service.job']->save($job);
+                $app['dispatcher']->dispatch('job_after_create', new GenericEvent($job));
+            }
+        }
+        return $app['twig']->render("mp.jobb.job.create.$format.twig", array(
+            "form" => $form->createView()
+        ));
+    }
+
+
 }

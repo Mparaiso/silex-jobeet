@@ -2,6 +2,7 @@
 namespace Mparaiso\JobBoard\Service;
 
 use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Mparaiso\JobBoard\Entity\Base\Category as BaseCategory;
 use DateTime;
 use Mparaiso\JobBoard\Entity\Base\Job as BaseJob;
@@ -87,20 +88,23 @@ class  CategoryService implements ObjectRepository
     {
         # @note @doctrine JOIN
         $q = $this->em->createQuery(
-            " select c from $this->class c JOIN $this->jobClass j
-          where c = j.category AND j  IS NOT NULL AND j.isActivated = TRUE AND j.expiresAt >= DATE('now','-30 days')"
+            " select c from $this->class c JOIN c.jobs j
+          where c = j.category AND j  IS NOT NULL AND j.isActivated = TRUE
+         "
         );
-        return $q->execute();
+        return new Paginator($q);
+
     }
 
     function countActiveJobsByCategory($category)
     {
         return $this->em
-            ->createQuery(
-            "SELECT count(j) FROM
+            ->createQuery("
+            SELECT count(j) FROM
             $this->jobClass j
             WHERE j.category = :category
-            AND j.isActivated = true ")
+            AND j.isActivated = true
+            ")
             ->setParameters(array('category' => $category))
             ->getSingleScalarResult();
     }

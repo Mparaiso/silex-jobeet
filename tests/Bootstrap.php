@@ -24,9 +24,8 @@ class Bootstrap
             "driver" => "pdo_sqlite",
             "memory" => TRUE
         ];
-        self::createDatabase($app);
-
         $app->boot();
+        self::createDatabase($app);
         return $app;
     }
 
@@ -36,7 +35,7 @@ class Bootstrap
      */
     static function getFixtureLoader()
     {
-        $path = __DIR__ . "/../data/jobboardfixtures";
+        $path = __DIR__ . "/../data/jobboardfixtures.yml";
         $loader = new FixtureLoader($path);
         return $loader;
     }

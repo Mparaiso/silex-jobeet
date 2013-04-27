@@ -1,0 +1,48 @@
+body {
+    font-size: 100%;
+    font-family: Open Sans, Arial, sans-serif;
+}
+
+.font75 {
+    font-size: 75%;
+}
+
+.font50 {
+    font-size: 50%;
+}
+
+form.form-hr label {
+    width: 150px;
+    vertical-align: top;
+    text-align: left;
+    padding-bottom: 30px;
+    display: inline-block;
+    clear: left;
+}
+
+form.form-hr input, form.form-hr select {
+    clear: right;
+    width: 300px;
+    margin-bottom: 30px;
+}
+
+form.form-hr input[type=radio] {
+    width:auto;
+}
+
+form.form-hr input[type=checkbox] {
+    width: auto;
+    clear: right;
+}
+
+form.form-hr input[type=submit] {
+    width: auto;
+    clear: none;
+}
+
+form.form-hr textarea {
+    width: 300px;
+    height: 100px;
+    margin-bottom: 30px;
+    clear: right;
+}

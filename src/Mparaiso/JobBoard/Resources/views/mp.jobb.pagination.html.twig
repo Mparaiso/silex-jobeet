@@ -1,0 +1,33 @@
+<div class="pagination pagination-centered">
+    <ul>
+        <li>
+            <a href="?offset=0">First</a>
+        </li>
+        <li>
+            <a {% if offset == 0 %}class="disabled muted"{% else %} href="?offset={{ offset-1 }}" {% endif %}><<</a>
+        </li>
+        <li><a href="#" class="disabled">{{ offset+1 }}</a></li>
+        <li>
+            <a {% if  (total / limit)|floor == offset %}class="disabled muted"{% else %} href="?offset={{ offset+1 }}" {% endif %}>>></a>
+        </li>
+        <li>
+            <a href="?offset={{ (total / limit)|floor }}">Last</a>
+        </li>
+    </ul>
+    {#
+        <ul class="">
+            <li><a {% if offset <=0 %} class="disabled"{% else %} href="?&offset={{ 0 }}" {% endif %} >&laquo;</a></li>
+            {% if offset >= 1 %}
+                <li><a class="" href="?&{{ offset }}">{{ offset }}</a></li>
+            {% endif %}
+            <li><a class=" active">{{ offset+1 }}</a></li>
+            {% set last_page =  resource_count < resource_limit %}
+            {% if last_page == false %}
+                <li><a class="" href="?&offset={{ offset+1 }}">{{ offset+2 }}</a></li>
+            {% endif %}
+            <li>
+                <a {% if last_page == true %} class="disabled" {% else %} href="?&offset={{ offset+2 }}" {% endif %} >&raquo;</a>
+            </li>
+        </ul>
+        #}
+</div>

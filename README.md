@@ -19,6 +19,7 @@ graphic assets license : all rights reserved &copy; M.PARAISO
 
 Define the following server variables :
 
++ JOBB_DRIVER : pdo driver name ( ex: pdo_mysql , pdo_sqlite )
 + JOBB_DBNAME : database name
 + JOBB_USER : database user
 + JOBB_PASSWORD : database password

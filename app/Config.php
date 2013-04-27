@@ -37,15 +37,24 @@ class Config implements ServiceProviderInterface
             'http_cache.cache_dir' => __DIR__ . '/../temp/cache-dir'
         ));
         $app->register(new TwigServiceProvider(), array(
-            "twig.path" => array(__DIR__ . "/Resources/views/"),
+            "twig.path"    => array(__DIR__ . "/Resources/views/"),
+            "twig.options" => array(
+                "cache" => __DIR__ . '/../temp/twig/'
+            )
         ));
         $app->register(new UrlGeneratorServiceProvider);
-        $app->register(new RouteConfigServiceProvider);
+        $app->register(new RouteConfigServiceProvider, array(
+            "mp.route_loader.cache" => __DIR__ . "/../temp/routing/",
+        ));
 
         $app->register(new DoctrineServiceProvider(), array(
             "db.options" => array(
-                "driver" => "pdo_sqlite",
-                "path"   => __DIR__ . "/database.sqlite"
+                "driver"   => getenv("JOBB_DRIVER"),
+                "user"     => getenv("JOBB_USER"),
+                "password" => getenv("JOBB_PASSWORD"),
+                "dbname"   => getenv("JOBB_DBNAME"),
+                "host"     => getenv("JOB_HOST"),
+                "port"     => getenv("JOB_PORT")
             )
         ));
         $app->register(new DoctrineORMServiceProvider(), array(

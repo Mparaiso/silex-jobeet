@@ -2,21 +2,14 @@
 {% extends app['mp.jobb.templates.layout'] %}
 {% block content %}
     <h3>{{ category.name }} Jobs <span class="pull-right muted"><small><a href="#">feed</a></small></span></h3>
-    <h6> {{ app["mp.jobb.service.category"].countActiveJobsByCategory(category) }} <span class="muted inline">jobs in this category</span></h6>
+    <h6> {{ total }} <span class="muted inline">jobs in this category</span></h6>
     <table class="table table-striped">
         <tbody>
 
-        {% for job in category.jobs %}
-            <tr>
-                <td>{{ job.location }}</td>
-                <td>
-                    <a href="{{ path('job_detail',{id:job.id,company:job.company|slugify,location:job.location|slugify,position:job.position|slugify}) }}">
-                        {{ job.position }}
-                    </a></td>
-                <td><a href="#">{{ job.company }}</a></td>
-                <td><a href="#">{{ job.createdAt|date('Y-m-d') }}</a></td>
-            </tr>
+        {% for job in jobs %}
+            {% include 'mp.jobb.job.row.html.twig' %}
         {% endfor %}
         </tbody>
     </table>
+    {% include 'mp.jobb.pagination.html.twig' with { total : total , limit: limit , offset : offset } %}
 {% endblock %}

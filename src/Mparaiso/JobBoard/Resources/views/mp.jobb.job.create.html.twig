@@ -1,0 +1,14 @@
+{# mp.jobb.job.create.html.twig #}
+{% extends app['mp.jobb.templates.layout'] %}
+{% block content %}
+    <h3>Post a Job</h3>
+    <form method="POST"
+          name='{{ form.vars.name }}' class="form-hr form-horizontal form-actions"
+            {{ form_enctype(form) }}
+            >
+        {{ form_widget(form) }}
+        <input type="submit" class="btn" value="Post a job">
+
+    </form>
+
+{% endblock %}

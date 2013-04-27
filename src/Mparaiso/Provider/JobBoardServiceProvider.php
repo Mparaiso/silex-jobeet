@@ -5,13 +5,17 @@ namespace Mparaiso\Provider;
 use Silex\ServiceProviderInterface;
 use Mparaiso\JobBoard\Controller\CategoryController;
 use Mparaiso\JobBoard\Service\CategoryService;
-use Gedmo\Sluggable\SluggableListener;
 use Mparaiso\JobBoard\Controller\JobController;
 use Mparaiso\JobBoard\Service\JobService;
 use Mparaiso\CodeGeneration\Controller\CRUD;
 use Doctrine\ORM\Mapping\Driver\YamlDriver;
 use Silex\Application;
 
+/**
+ * FR : fournit un service de site recherche d'emploi
+ * EN : provide a job search site
+ * @author M.PARAISO <mparaiso@online.fr>
+ */
 class JobBoardServiceProvider implements ServiceProviderInterface
 {
     /**
@@ -23,8 +27,8 @@ class JobBoardServiceProvider implements ServiceProviderInterface
         $app['mp.jobb.controller.job'] = $app->share(function ($app) {
             return new JobController($app['mp.jobb.service.job']);
         });
-        $app['mp.jobb.controller.category']= $app->share(function($app){
-        return new CategoryController;
+        $app['mp.jobb.controller.category'] = $app->share(function ($app) {
+            return new CategoryController;
         });
         $app['mp.jobb.controller.admin.job'] = $app->share(function ($app) {
             return new CRUD(array(
@@ -36,10 +40,14 @@ class JobBoardServiceProvider implements ServiceProviderInterface
         });
         # entity services
         $app['mp.jobb.service.job'] = $app->share(function ($app) {
-            return new JobService($app['mp.jobb.orm.em'], $app['mp.jobb.entity.job'], $app['mp.jobb.entity.category']);
+            return new JobService($app['mp.jobb.orm.em'],
+                $app['mp.jobb.entity.job'],
+                $app['mp.jobb.entity.category']);
         });
         $app['mp.jobb.service.category'] = $app->share(function ($app) {
-            return new CategoryService($app['mp.jobb.orm.em'], $app['mp.jobb.entity.category'], $app['mp.jobb.entity.job']);
+            return new CategoryService($app['mp.jobb.orm.em'],
+                $app['mp.jobb.entity.category'],
+                $app['mp.jobb.entity.job']);
         });
         $app["mp.jobb.console"] = $app->share(function ($app) {
             return $app['console'];
@@ -66,15 +74,27 @@ class JobBoardServiceProvider implements ServiceProviderInterface
         $app['mp.jobb.templates.path'] = __DIR__ . '/../JobBoard/Resources/views/';
         $app['mp.jobb.templates.admin_path'] = __DIR__ . '/../JobBoard/Resources/views/admin';
         $app['mp.jobb.templates.layout'] = "mp.jobb.layout.html.twig";
-
+        # functions
+        $app['mp_jobb_get_filepath'] = $app->protect(function ($id) use ($app) {
+            if (file_exists($app['mp.jobb.params.upload_dir'] . "/" . $id)) {
+                return $app['mp.jobb.params.upload_server_path'] . "/" . $id;
+            }
+        });
         # params
         $app['mp.jobb.params.max_jobs_on_homepage'] = 10;
+        $app['mp.jobb.params.max_jobs_on_category'] = 20;
+        $app['mp.jobb.params.upload_dir'] = __DIR__ . '/../web/upload/';
+        $app['mp.jobb.params.upload_server_path'] = "/upload/";
 
         $app['twig'] = $app->share($app->extend("twig", function ($twig, $app) {
             /* @var $twig \Twig_Environment */
             #@note FR : créer un filter twig
             $twig->addFilter(new \Twig_SimpleFilter("slugify", function ($string, $separator = "-") {
                 return preg_replace('/[^\w\d]/i', $separator, $string);
+            }));
+            $twig->addFilter(new \Twig_SimpleFilter("floor", function ($float) {
+                if (!is_float($float)) throw new \Exception("value must be a float");
+                return floor($float);
             }));
             return $twig;
         }));

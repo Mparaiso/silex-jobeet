@@ -1,0 +1,10 @@
+{# a job row in a job list table #}
+<tr>
+    <td>{{ job.location }}</td>
+    <td>
+        <a href="{{ path('job_detail',{id:job.id,company:job.company|slugify,location:job.location|slugify,position:job.position|slugify}) }}">
+            {{ job.position }}
+        </a></td>
+    <td><a href="#">{{ job.company }}</a></td>
+    <td><a href="#">{{ job.createdAt|date('Y-m-d') }}</a></td>
+</tr>

@@ -11,7 +11,7 @@ class  JobService implements ObjectRepository
     protected $em;
     protected $class;
 
-    function __construct(EntityManager $em, $class,$categoryClass)
+    function __construct(EntityManager $em, $class, $categoryClass)
     {
         $this->em = $em;
         $this->class = $class;
@@ -21,7 +21,9 @@ class  JobService implements ObjectRepository
     function save(BaseJob $job, $flush = TRUE)
     {
         // update expiration date
-        //$job->setExpiresAt(new DateTime("+ 30 days "));
+        if ($job->getExpiresAt() === NULL) {
+            $job->setExpiresAt(new DateTime("+ 30 days "));
+        }
         $job->setUpdatedAt(new DateTime());
         if (NULL === $job->getCreatedAt()) {
             $job->setCreatedAt(new DateTime());
@@ -33,7 +35,12 @@ class  JobService implements ObjectRepository
 
     function getActiveJobs()
     {
-        return $this->em->createQuery("SELECT j FROM $this->class j JOIN $this->categoryClass c WITH j.category = c WHERE j.expiresAt > DATE('now','-10 years') ORDER BY j.createdAt ASC , c.name DESC , j.company DESC ")->execute();
+        return $this->em->createQuery("
+        SELECT j FROM $this->class j
+        JOIN $this->categoryClass c
+        WITH j.category = c WHERE j.isActivated = true
+        ORDER BY j.createdAt ASC , c.name DESC , j.company DESC
+        ")->execute();
     }
 
     function find($id)

@@ -12,7 +12,8 @@
                 {{ job.description }}
             </div>
             <div class="span4">
-                <img src="http://placehold.it/200x100&text=Company+Logo" class="pull-right" alt="">
+                <img src="{{ app.mp_jobb_get_filepath(job.logo)|default('http://placehold.it/200x100&text=Company+Logo') }}"
+                     class="pull-right" alt="">
             </div>
         </div>
         <h5>How to apply?</h5>

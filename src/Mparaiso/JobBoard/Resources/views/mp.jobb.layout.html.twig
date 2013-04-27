@@ -6,12 +6,8 @@
     <link rel="stylesheet"
           href="{{ app.request.baseUrl }}/static/bootstrap/css/bootstrap.min.css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <style type="text/css">
-        body {
-            font-size: 100%;
-            font-family: Open Sans, Arial, sans-serif;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ app.request.baseUrl }}/static/css/style.css">
+
 </head>
 <body>
 <div class="navbar navbar-inverse">
@@ -26,7 +22,7 @@
                         <input class="btn btn-inverse" type="submit" value="Ask for a job">
                     </form>
                 </li>
-                <li><a href="#">Post a Job</a></li>
+                <li><a href="{{ path('job_post') }}">Post a Job</a></li>
             </ul>
         </div>
     </div>
@@ -41,7 +37,7 @@
         {% block content %}{% endblock %}
     </div>
     <hr>
-    <footer>
+    <div class="row font75">
         <span>&copy; M.PARAISO</span>
         <ul class="nav inline pull-right">
             <li><a href="#">About Job Board</a></li>
@@ -49,7 +45,7 @@
             <li><a href="#">Job Board API</a></li>
             <li><a href="#">Affiliates</a></li>
         </ul>
-    </footer>
+    </div>
 </div>
 </body>
 </html>
