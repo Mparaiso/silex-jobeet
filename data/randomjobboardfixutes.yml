@@ -92,3 +92,26 @@ fixtures:
         expiresAt:   { datetime : 2005-12-01 }
         token:        job_expired
         email:        job@example.com
+
+  <?php for($i=100;$i<=200;$i++): ?>
+
+  - entity: Mparaiso\JobBoard\Entity\Job
+    fields:
+      category: <?= array_rand(array('%programming%'=>0, '%design%'=>0 ,'%manager%'=>0 ))."\n" ?>
+      company: <?= array_rand(array('Google'=>0,'Facebook'=>0,'Apple'=>0,'Microsoft'=>0,'Yahoo'=>0))."\n" ?>
+      position: <?= array_rand(array('Developer'=>0, 'Designer'=>0 ,'Product Manager'=>0 ))."\n" ?>
+      location: Paris, France
+      description: |
+        labore et dolore magna aliqua. Ut
+        enim ad minim veniam, quis nostrud exercitation
+        ullamco laboris isi ut aliquip ex ea commodo consequat.
+        Duis aute irure dolor in reprehenderit in.
+      howToApply: |
+        Send your resume to lorem.ipsum [at] company_<?= $i ?>.com
+      isPublic: true
+      isActivated: true
+      expiresAt:   { datetime : 2013-12-01 }
+      token: job_<?= $i."\n" ?>
+      email: job@example.com
+
+  <?php endfor; ?>

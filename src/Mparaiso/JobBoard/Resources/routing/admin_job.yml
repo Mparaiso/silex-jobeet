@@ -1,0 +1,27 @@
+# routes
+job_index:
+  path: "/"
+  defaults: { _controller: "mp.jobb.controller.admin.job:index" ,format:  "html" }
+
+job_create:
+  path: "/create"
+  defaults: { _controller: "mp.jobb.controller.admin.job:create" ,format: "html" }
+
+job_update:
+  path: "/update/{id}"
+  defaults: { _controller: "mp.jobb.controller.admin.job:update" , format: "html" }
+  requirements:
+    id: "\d+"
+
+job_delete:
+  path: "/delete/{id}"
+  defaults: { _controller: "mp.jobb.controller.admin.job:delete" , format: "html" }
+  requirements:
+    id: "\d+"
+
+job_read:
+  path: "/{id}"
+  defaults: { _controller: "mp.jobb.controller.admin.job:read" , format: "html" }
+  requirements:
+    id: "\d+"
+

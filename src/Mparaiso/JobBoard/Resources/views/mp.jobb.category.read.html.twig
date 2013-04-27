@@ -1,13 +1,13 @@
 {# mp.jobb.job.index.html.twig #}
 {% extends app['mp.jobb.templates.layout'] %}
 {% block content %}
-    <h3>All Jobs</h3>
+    <h3>{{ category.name }} Jobs <span class="pull-right muted"><small><a href="#">feed</a></small></span></h3>
+    <h6> {{ app["mp.jobb.service.category"].countActiveJobsByCategory(category) }} <span class="muted inline">jobs in this category</span></h6>
     <table class="table table-striped">
         <tbody>
-        {% for job in jobs %}
-            <tr>
-                <td><strong>{{ job.category }}</strong></td>
 
+        {% for job in category.jobs %}
+            <tr>
                 <td>{{ job.location }}</td>
                 <td>
                     <a href="{{ path('job_detail',{id:job.id,company:job.company|slugify,location:job.location|slugify,position:job.position|slugify}) }}">

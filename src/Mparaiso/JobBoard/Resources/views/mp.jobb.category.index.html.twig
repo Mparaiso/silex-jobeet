@@ -1,0 +1,29 @@
+{# mp.jobb.job.index.html.twig #}
+{% extends app['mp.jobb.templates.layout'] %}
+{% block content %}
+    <h3>Latest Jobs</h3>
+    <table class="table table-striped">
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <th colspan="4">
+                    <a href="{{ path('category_read',{id:category.id,name:category.name|slugify}) }}">{{ category }}</a> <span
+                        class="pull-right muted"><small><a href="#">feed</a></small></span>
+                </th>
+            </tr>
+
+            {% for job in app['mp.jobb.service.job'].findBy({category:category},{expiresAt:'DESC'},10) %}
+                <tr>
+                    <td>{{ job.location }}</td>
+                    <td>
+                        <a href="{{ path('job_detail',{id:job.id,company:job.company|slugify,location:job.location|slugify,position:job.position|slugify}) }}">
+                            {{ job.position }}
+                        </a></td>
+                    <td><a href="#">{{ job.company }}</a></td>
+                    <td><a href="#">{{ job.createdAt|date('Y-m-d') }}</a></td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

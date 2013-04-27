@@ -11,11 +11,11 @@ class JobType extends AbstractType
         parent::buildForm($builder, $options);
         $builder
             ->add('category')
-            ->add("type")
+            ->add("position")
             ->add('company')
             ->add('logo')
             ->add('url')
-            ->add('position')
+            ->add('type')
             ->add('location')
             ->add('description')
             ->add('howToApply')

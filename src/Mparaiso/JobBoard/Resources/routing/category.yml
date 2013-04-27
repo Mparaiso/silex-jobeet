@@ -1,0 +1,3 @@
+category_read:
+  path: "/category/{id}/{name}"
+  defaults: { _controller: "mp.jobb.controller.category:read"  , format: html ,  name: ~ }

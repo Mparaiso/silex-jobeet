@@ -40,6 +40,7 @@ Mparaiso\JobBoard\Entity\Base\Job:
       required: false
       nullable: true
     updatedAt:
+      type: datetime
       required: false
       nullable: true
 

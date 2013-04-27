@@ -5,7 +5,7 @@
 
         <h3>{{ job.company }} <span class="pull-right"><small><i>{{ job.location }}</i></small></span></h3>
         <h4>{{ job.position }} -
-            <small>{{ job.type }}</small>
+            <small>{{ job.type|default('full-time') }}</small>
         </h4>
         <div class="row">
             <div class="span8">
@@ -17,9 +17,11 @@
         </div>
         <h5>How to apply?</h5>
         <div>{{ job.howToApply }}</div>
-        <div class="pull-right muted"><small><i>Posted on {{ job.createdAt|date('Y-m-d') }}</i></small></div>
+        <div class="pull-right muted">
+            <small><i>Posted on {{ job.createdAt|date('Y-m-d') }}</i></small>
+        </div>
         <div>
-        <hr>
+            <hr>
             <a href="{{ path("job_update",{id : job.id}) }}" class="btn">
                 Edit
             </a>

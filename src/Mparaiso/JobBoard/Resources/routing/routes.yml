@@ -1,17 +1,24 @@
 #routes
 home:
   path: /
-  defaults : { _controller: mp.jobb.controller.job:index  ,format: html }
+  defaults: { _controller: mp.jobb.controller.category:index , format: html }
+
+job_principe:
+  path: /jobs
+  defaults: { _controller: mp.jobb.controller.job:index  ,format: html }
 
 job_detail:
-  path: /{company}/{location}/{id}/{position}
+  path: /jobs/{company}/{location}/{id}/{position}
   defaults: { _controller: mp.jobb.controller.job:read }
   methods: [GET]
   requirements:
     id: \d+
 
+category:
+  prefix: /category
+  resource: category.yml
 
 
-admin.job:
+admin_job:
   prefix: /admin/job
-  resource: admin.job.yml
+  resource: admin_job.yml

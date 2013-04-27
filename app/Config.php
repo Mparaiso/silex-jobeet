@@ -1,5 +1,6 @@
 <?php
 use Silex\ServiceProviderInterface;
+use Silex\Provider\MonologServiceProvider;
 use Silex\Provider\SessionServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
@@ -26,6 +27,9 @@ class Config implements ServiceProviderInterface
         $app->register(new ConsoleServiceProvider());
         $app->register(new ServiceControllerServiceProvider());
         $app->register(new  SessionServiceProvider());
+        $app->register(new MonologServiceProvider(), array(
+            "monolog.logfile" => __DIR__ . '/../temp/' . date("Y-m-d") . ".txt",
+        ));
         $app->register(new FormServiceProvider());
         $app->register(new TranslationServiceProvider());
         $app->register(new ValidatorServiceProvider());

@@ -14,12 +14,13 @@ class JobController
         $this->jobService = $jobService;
     }
 
-    function index(Application $app, Request $req)
+    function index(Application $app, Request $req,$format)
     {
         $limit = 10;
         $offset = 0;
-        $jobs = $this->jobService->findBy(array("isActivated"=>true), array("createdAt" => "DESC"), $limit, $limit * $offset);
-        return $app['twig']->render("mp.jobb.job.index.html.twig", array(
+//        $jobs = $this->jobService->findBy(array("isActivated" => TRUE), array("createdAt" => "ASC"), $limit, $limit * $offset);
+        $jobs = $this->jobService->getActiveJobs();
+        return $app['twig']->render("mp.jobb.job.index.$format.twig", array(
             "jobs" => $jobs,
         ));
 
