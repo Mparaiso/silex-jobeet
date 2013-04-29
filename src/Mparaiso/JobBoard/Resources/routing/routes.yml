@@ -3,22 +3,16 @@ home:
   path: /
   defaults: { _controller: mp.jobb.controller.category:index , format: html }
 
-job_principe:
-  path: /jobs
-  defaults: { _controller: mp.jobb.controller.job:index  ,format: html }
 
-job_detail:
-  path: /jobs/{company}/{location}/{id}/{position}
-  defaults: { _controller: mp.jobb.controller.job:read }
-  methods: [GET]
-  requirements:
-    id: \d+
 
 job_post:
   path: /jobs/create
   defaults: { _controller: mp.jobb.controller.job:create ,format:html }
   methods: [GET,POST]
 
+job:
+  prefix: /job
+  resource: job.yml
 
 category:
   prefix: /category
@@ -28,3 +22,7 @@ category:
 admin_job:
   prefix: /admin/job
   resource: admin_job.yml
+
+admin_category:
+  prefix: /admin/category
+  resource: admin_category.yml

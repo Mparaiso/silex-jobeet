@@ -1,0 +1,12 @@
+{# mp.jobb.job.create.html.twig #}
+{% extends app['mp.jobb.templates.layout'] %}
+{% block content %}
+<h3>Delete the job "{{job }}" permanently.</h3>
+
+<p>Confirm job deletion</p>
+<form action="" method='POST'>
+    <input type="submit" value="Delete" class='btn btn-danger'/>
+    <a href="{{path('home')}}" class='btn'>Cancel</a>
+</form>
+
+{% endblock %}

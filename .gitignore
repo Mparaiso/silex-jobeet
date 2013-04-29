@@ -4,3 +4,4 @@ temp/*
 cache/*
 composer.lock
 vendor/*
+web/upload/*

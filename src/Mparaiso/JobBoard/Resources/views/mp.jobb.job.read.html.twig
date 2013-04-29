@@ -2,7 +2,9 @@
 {% extends app['mp.jobb.templates.layout'] %}
 {% block content %}
     {% if job is not null %}
-
+        {% if token is defined %}
+            {% include 'mp.jobb.job.admin_menu.html.twig' with {job:job} %}
+        {% endif %}
         <h3>{{ job.company }} <span class="pull-right"><small><i>{{ job.location }}</i></small></span></h3>
         <h4>{{ job.position }} -
             <small>{{ job.type|default('full-time') }}</small>
@@ -12,7 +14,7 @@
                 {{ job.description }}
             </div>
             <div class="span4">
-                <img src="{{ app.mp_jobb_get_filepath(job.logo)|default('http://placehold.it/200x100&text=Company+Logo') }}"
+                <img src="{{ mp_jobb_get_path(job.logo)|default('http://placehold.it/200x100&text=Company+Logo') }}"
                      class="pull-right" alt="">
             </div>
         </div>
@@ -21,12 +23,15 @@
         <div class="pull-right muted">
             <small><i>Posted on {{ job.createdAt|date('Y-m-d') }}</i></small>
         </div>
+        {#
         <div>
             <hr>
-            <a href="{{ path("job_update",{id : job.id}) }}" class="btn">
+            <a href="{{ path("job_edit",{token:job.token}) }}" class="btn">
                 Edit
             </a>
+            <a href="{{path('job_remove',{token:job.token}) }}" class="btn">Delete</a>
         </div>
+        #}
     {% else %}
         <h3>No job found</h3>
     {% endif %}

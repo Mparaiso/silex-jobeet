@@ -2,7 +2,9 @@ body {
     font-size: 100%;
     font-family: Open Sans, Arial, sans-serif;
 }
-
+.font90{
+    font-size: 90%;
+}
 .font75 {
     font-size: 75%;
 }
@@ -10,7 +12,9 @@ body {
 .font50 {
     font-size: 50%;
 }
-
+.row.main{
+    min-height: 600px;
+}
 form.form-hr label {
     width: 150px;
     vertical-align: top;

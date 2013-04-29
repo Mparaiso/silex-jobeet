@@ -12,7 +12,7 @@
                 </th>
             </tr>
 
-            {% for job in app['mp.jobb.service.job'].findBy({category:category},{expiresAt:'DESC'},10) %}
+            {% for job in app['mp.jobb.service.job'].findBy({category:category},{createdAt:"DESC",expiresAt:'DESC'},10) %}
                 {% include 'mp.jobb.job.row.html.twig' %}
             {% endfor %}
         {% endfor %}

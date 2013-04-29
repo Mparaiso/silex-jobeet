@@ -111,7 +111,7 @@ fixtures:
       isPublic: true
       isActivated: true
       expiresAt:   { datetime : 2013-12-01 }
-      createdAt: { datetime: <?php $d = new DateTime(" -".rand(1,100)." days"); echo $d->format('Y-m-d'); ?> }
+      createdAt: { datetime: <?php $d = new DateTime(" ".(-1*(rand(1,100))+50)." days"); echo $d->format('Y-m-d'); ?> }
       token: job_<?= $i."\n" ?>
       email: job@example.com
 

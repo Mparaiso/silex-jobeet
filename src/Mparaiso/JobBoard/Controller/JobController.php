@@ -3,6 +3,7 @@
 namespace Mparaiso\JobBoard\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Mparaiso\JobBoard\Event\JobEvents;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Mparaiso\JobBoard\Entity\Base\Job;
 use Symfony\Component\HttpFoundation\File\File;
@@ -10,8 +11,14 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Form\Form;
 use Silex\Application;
 
+/**
+ * FR : gère les jobs
+ * EN : front manage jobs
+ * @author M.Paraiso <mparaiso@online.fr>
+ */
 class JobController
 {
+
     protected $jobService;
 
     function __construct($jobService)
@@ -28,41 +35,49 @@ class JobController
         return $app['twig']->render("mp.jobb.job.index.$format.twig", array(
             "jobs" => $jobs,
         ));
-
     }
 
-    function read(Application $app, Request $req, $company, $location, $id, $position)
+    function read(Application $app, Request $req, $company,
+                  $location, $id, $position, $format)
     {
         $job = $this->jobService->find($id);
-        //$job === NULL AND $app->abort(404, "Job not found !");
-        return $app['twig']->render("mp.jobb.job.read.html.twig", array(
+        $job === NULL AND $app->abort(404, "resource not found !");
+        return $app['twig']->render("mp.jobb.job.read.$format.twig", array(
             "job" => $job,
+        ));
+    }
+
+    function readByToken(Application $app, Request $req, $token, $format)
+    {
+        $job = $this->jobService->findOneBy(array('token' => $token));
+        $job === NULL AND $app->abort(404, "Job not found !");
+        return $app['twig']->render("mp.jobb.job.read.$format.twig", array(
+            "job"   => $job,
+            "token" => $token
         ));
     }
 
     function create(Application $app, Request $req, $format)
     {
         $job = new $app['mp.jobb.entity.job'];
-        $type = new  $app['mp.jobb.form.job'];
-        $form = $app['form.factory']->create($type, $job);
+        $type = new $app['mp.jobb.form.job'];
+        $form = $app['form.factory']->create($type, $job)
+            ->remove('logo')
+            ->remove('token');
         /* @var $form Form */
         if ("POST" === $req->getMethod()) {
             $form->bind($req);
             if ($form->isValid()) {
-                // upload logo
-                if ($form->get('logo_file')->getData() != NULL) {
-                    $logoFile = $form->get('logo_file')->getData();
-                    /* @var $logoFile UploadedFile */
-                    $logoFileName = $logoFile->getClientOriginalName() . uniqid("_");
-                    $logoFile->move(
-                        $app['mp.jobb.params.upload_dir'],
-                        $logoFileName
-                    );
-                    $job->setLogo($logoFileName);
-                }
-                $app['dispatcher']->dispatch('job_before_create', new GenericEvent($job));
-                $app['mp.jobb.service.job']->save($job);
-                $app['dispatcher']->dispatch('job_after_create', new GenericEvent($job));
+                $app['dispatcher']->dispatch(JobEvents::BEFORE_CREATE, new GenericEvent($job, array(
+                    'form' => $form, 'app' => $app, 'request' => $req)));
+                $this->jobService->save($job);
+                $app['dispatcher']->dispatch(JobEvents::AFTER_CREATE, new GenericEvent($job, array(
+                    'form' => $form, 'app' => $app, 'request' => $req)));
+                $app['session']->getFlashBag()->set("success", "Job successfully posted !");
+                return $app->redirect(
+                    $app['url_generator']->generate('job_detail', array(
+                        "id"       => $job->getId(), "company" => $job->getCompany(),
+                        "location" => $job->getLocation(), "position" => $job->getPosition())));
             }
         }
         return $app['twig']->render("mp.jobb.job.create.$format.twig", array(
@@ -70,5 +85,112 @@ class JobController
         ));
     }
 
+    function edit(Application $app, Request $req, $id, $format)
+    {
+        $job = $this->jobService->find($id);
+        if ($job === NULL)
+            $app->abort(404, "resource not found");
+        $type = new $app['mp.jobb.form.job'];
+        $form = $app['form.factory']->create($type, $job)->remove('logo')->remove('token');
+        /* @var $form Form */
+        if ("POST" === $req->getMethod()) {
+            $form->bind($req);
+            if ($form->isValid()) {
+
+                $app['dispatcher']->dispatch(JobEvents::BEFORE_UPDATE, new GenericEvent($job, array(
+                    'form' => $form, 'app' => $app, 'request' => $req)));
+                $this->jobService->save($job);
+                $app['dispatcher']->dispatch(JobEvents::AFTER_UPDATE, new GenericEvent($job, array(
+                    'form' => $form, 'app' => $app, 'request' => $req)));
+                $app['session']->getFlashBag()->set("success", "Job successfully updated !");
+                return $app->redirect(
+                    $app['url_generator']->generate('job_detail', array(
+                        "id"       => $job->getId(), "company" => $job->getCompany(),
+                        "location" => $job->getLocation(), "position" => $job->getPosition())));
+            }
+        }
+        return $app['twig']->render("mp.jobb.job.edit.$format.twig", array(
+            "form" => $form->createView()
+        ));
+    }
+
+    function editByToken(Application $app, Request $req, $token, $format)
+    {
+        $job = $this->jobService->findOneBy(array('token' => $token));
+        if ($job === NULL)
+            $app->abort(404, "resource not found");
+        $type = new $app['mp.jobb.form.job'];
+        $form = $app['form.factory']->create($type, $job)->remove('logo')->remove('token');
+        /* @var $form Form */
+        if ("POST" === $req->getMethod()) {
+            $form->bind($req);
+            if ($form->isValid()) {
+
+                $app['dispatcher']->dispatch(JobEvents::BEFORE_UPDATE, new GenericEvent($job, array(
+                    'form' => $form, 'app' => $app, 'request' => $req)));
+                $this->jobService->save($job);
+                $app['dispatcher']->dispatch(JobEvents::AFTER_UPDATE, new GenericEvent($job, array(
+                    'form' => $form, 'app' => $app, 'request' => $req)));
+                $app['session']->getFlashBag()->set("success", "Job successfully updated !");
+                return $app->redirect(
+                    $app['url_generator']->generate('job_detail', array(
+                        "id"       => $job->getId(), "company" => $job->getCompany(),
+                        "location" => $job->getLocation(), "position" => $job->getPosition())));
+            }
+        }
+        return $app['twig']->render("mp.jobb.job.edit.$format.twig", array(
+            "form" => $form->createView()
+        ));
+    }
+
+    /**
+     * EN : delete a job by id
+     * FR : efface un job selon l'id
+     * @param \Silex\Application $app
+     * @param \Symfony\Component\HttpFoundation\Request $req
+     * @param type $id
+     * @param type $format
+     * @return type
+     */
+    function delete(Application $app, Request $req, $id, $format)
+    {
+        $job = $this->jobService->find($id);
+        if ($job === NULL)
+            $app->abort(404, 'resource not found');
+        if ("POST" === $req->getMethod()) {
+            $app['dispatcher']->dispatch(JobEvents::BEFORE_DELETE, new GenericEvent($job, array('request' => $req)));
+            $this->jobService->delete($job);
+            $app['dispatcher']->dispatch(JobEvents::AFTER_DELETE, new GenericEvent($job, array('request' => $req)));
+            return $app->redirect($app['url_generator']->generate('job_principe'));
+        }
+        return $app['twig']->render("mp.jobb.job.delete.$format.twig", array(
+            "job" => $job,
+        ));
+    }
+
+    /**
+     * EN : delete a job found by its token
+     * @param \Silex\Application $app
+     * @param \Symfony\Component\HttpFoundation\Request $req
+     * @param $token
+     * @param $format
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    function deleteByToken(Application $app, Request $req, $token, $format)
+    {
+        $job = $this->jobService->findOneBy(array('token' => $token));
+        if ($job === NULL)
+            $app->abort(404, 'resource not found');
+        if ("POST" === $req->getMethod()) {
+            $app['dispatcher']->dispatch(JobEvents::BEFORE_DELETE, new GenericEvent($job, array('request' => $req)));
+            $this->jobService->delete($job);
+            $app['dispatcher']->dispatch(JobEvents::AFTER_DELETE, new GenericEvent($job, array('request' => $req)));
+            return $app->redirect($app['url_generator']->generate('job_principe'));
+        }
+        return $app['twig']->render("mp.jobb.job.delete.$format.twig", array(
+            "job"   => $job,
+            "token" => $token,
+        ));
+    }
 
 }

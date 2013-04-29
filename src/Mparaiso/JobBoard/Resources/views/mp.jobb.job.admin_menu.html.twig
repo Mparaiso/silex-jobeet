@@ -1,0 +1,25 @@
+{# mp.jobb.job.admin_menu.html.twig #}
+<div class="alert alert-block alert-info">
+    <h5>Admin</h5>
+    <ul class="inline">
+        <li><a href="{{ path('job_edit',{token:job.token}) }}">Edit</a></li>
+        {% if not job.isActivated %}
+            <li><a href="#">Publish</a></li>
+        {% endif %}
+        <li><a href="{{ path('job_remove',{ token:job.token }) }}">Delete</a></li>
+        {% if app['mp.jobb.service.job'].isExpired(job) %}
+            <li>Expired</li>
+        {% else %}
+            <li>
+                Expires in {{ app['mp.jobb.service.job'].getDaysBeforeExpires(job) }} days
+            </li>
+        {% endif %}
+        {% if app['mp.jobb.service.job'].expiresSoon(job) %}
+            <li><a href="#">Extends</a> for another {{ app['mp.jobb.params.job_active_days'] }} days</li>
+        {% endif %}
+        <li>[ <u><a  href="{{ app.request.requestUri }}">Bookmark this URL to manage this job in the future.</a></u> ]</li>
+
+    </ul>
+</div>
+
+

@@ -23,6 +23,7 @@
                     </form>
                 </li>
                 <li><a href="{{ path('job_post') }}">Post a Job</a></li>
+                <li><a href="{{ path('mp_crud_job_index')}}">Administration</a></li>
             </ul>
         </div>
     </div>
@@ -33,7 +34,7 @@
             {% include 'crud/includes/flash.html.twig' %}
         {% endblock %}
     </div>
-    <div class="row">
+    <div class="row main">
         {% block content %}{% endblock %}
     </div>
     <hr>

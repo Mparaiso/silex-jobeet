@@ -93,12 +93,6 @@ class Category extends \Mparaiso\JobBoard\Entity\Category implements \Doctrine\O
         return parent::__toString();
     }
 
-    public function loadValidatorMetadata(\Symfony\Component\Validator\Mapping\ClassMetadata $metadata)
-    {
-        $this->__load();
-        return parent::loadValidatorMetadata($metadata);
-    }
-
     public function setName($name)
     {
         $this->__load();

@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManager;
  * test bootstrap file
  */
 
- $autoload = require __DIR__."/../vendor/autoload.php";
+$autoload = require __DIR__ . "/../vendor/autoload.php";
 
 class Bootstrap
 {
@@ -24,6 +24,8 @@ class Bootstrap
             "driver" => "pdo_sqlite",
             "memory" => TRUE
         ];
+      $app['exception_handler']->disable();
+        $app['session.test'] = TRUE;
         $app->boot();
         self::createDatabase($app);
         return $app;
@@ -51,5 +53,14 @@ class Bootstrap
         $tool = new SchemaTool($em);
         $tool->createSchema($em->getMetadataFactory()->getAllMetadata());
 
+    }
+
+    /**
+     * get tests root directory
+     * @return string
+     */
+    static function getRootDir()
+    {
+        return __DIR__;
     }
 }

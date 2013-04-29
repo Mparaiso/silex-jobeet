@@ -1,0 +1,37 @@
+job_principe:
+  path: "/"
+  defaults: { _controller: mp.jobb.controller.job:index  ,format: html }
+
+
+job_post:
+  path: "/post-a-job"
+  defaults: { _controller: mp.jobb.controller.job:create ,format:html }
+  methods: [GET,POST]
+
+
+job_edit:
+  path: "/edit-a-job/{token}"
+  defaults: { _controller: mp.jobb.controller.job:editByToken , format:html }
+  methods: [GET,POST]
+  requirements:
+    token: \w+
+
+job_remove:
+  path: "/remove-job/{token}"
+  defaults: { _controller: mp.jobb.controller.job:deleteByToken , format:html }
+  requirements:
+    token: \w+
+
+job_admin:
+  path: "/job-admin/{token}"
+  defaults: { _controller: mp.jobb.controller.job:readByToken , format: html }
+  requirements:
+    token: \w+
+
+job_detail:
+  path: "/{company}/{location}/{id}/{position}"
+  defaults: { _controller: mp.jobb.controller.job:read  , format: html }
+  methods: [GET]
+  requirements:
+    id: \d+
+

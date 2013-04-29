@@ -1,0 +1,27 @@
+# routes
+mp_crud_category_index:
+  path: "/"
+  defaults: { _controller: "mp.jobb.controller.admin.category:index" ,format:  "html" }
+
+mp_crud_category_create:
+  path: "/create"
+  defaults: { _controller: "mp.jobb.controller.admin.category:create" ,format: "html" }
+
+mp_crud_category_update:
+  path: "/update/{id}"
+  defaults: { _controller: "mp.jobb.controller.admin.category:update" , format: "html" }
+  requirements:
+    id: "\d+"
+
+mp_crud_category_delete:
+  path: "/delete/{id}"
+  defaults: { _controller: "mp.jobb.controller.admin.category:delete" , format: "html" }
+  requirements:
+    id: "\d+"
+
+mp_crud_category_read:
+  path: "/{id}"
+  defaults: { _controller: "mp.jobb.controller.admin.category:read" , format: "html" }
+  requirements:
+    id: "\d+"
+

@@ -22,7 +22,7 @@ class Category
         return $this->name;
     }
 
-    function loadValidatorMetadata(ClassMetadata $metadata)
+    static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata
             ->addPropertyConstraint("name", new NotNull())

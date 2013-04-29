@@ -1,4 +1,5 @@
 <?php
+
 namespace Mparaiso\JobBoard\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -12,6 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class JobType extends AbstractType
 {
+
     protected static $type = array('Full time' => 'Full time',
                                    'Part time' => 'Part time',
                                    'Freelance' => 'Freelance');
@@ -22,26 +24,27 @@ class JobType extends AbstractType
         $builder
             ->add('category', NULL, array('constraints' => array(new NotNull()), 'required' => TRUE))
             ->add("position", "text", array(
-            'constraints' => array(new Length(array('min' => 4, "max" => 255)))))
+            'constraints' => array(new NotNull(), new Length(array('min' => 4, "max" => 255)))))
             ->add('company', NULL, array(
-            'constraints' => array(new Length(array('min' => 3, 'max' => 255)))))
-            ->add('logo_file', "file", array('attr'=>array('accept'=>'image/*'),
-            'mapped'=>false,'required' => FALSE, 'constraints' => array(
-            new File(array("maxSize" => '300k', "mimeTypes" => array('image/*'))))))
-            ->add('url', NULL, array('required' => FALSE, 'constraints' => array(
+            'constraints' => array(new NotNull(), new Length(array('min' => 3, 'max' => 255)))))
+           // ->add('logo',null,array('required'=>false))
+            ->add('logo_file', "file", array('attr'   => array('accept' => 'image/*'),
+                                             'mapped' => FALSE, 'required' => FALSE, 'constraints' => array(
+                new File(array("maxSize" => '300k', "mimeTypes" => array('image/*'))))))
+            ->add('url', NULL, array('label'=>'Url (optional)','required' => FALSE, 'constraints' => array(
             new Url())))
             ->add('type', 'choice', array(
             "choices" => self::$type, 'constraints' => array(
                 new Choice(array("choices" => self::$type)),
             )))
             ->add('location', NULL, array(
-            'constraints' => array(new Length(array('min' => 3, 'max' => 255)))))
-            ->add('description', NULL, array(
-            'constraints' => array(new Length(array('min' => 3, 'max' => 500)))))
-            ->add('howToApply', NULL, array('label' => "How to apply ?"))
-            ->add('token')
-            ->add('isPublic', NULL, array('label' => 'is public ?'))
-            ->add('email', 'email', array('constraints' => array(new Email())));
+            'constraints' => array(new NotNull(), new Length(array('min' => 3, 'max' => 255)))))
+            ->add('description', NULL, array('data'=>'the job offer description',
+            'constraints' => array(new NotNull(), new Length(array('min' => 3, 'max' => 500)))))
+            ->add('howToApply', NULL, array('data'=>'how to apply the job','label' => "How to apply ?", "constraints" => array(new NotNull())))
+            ->add('token',null,array('required'=>false,'label'=>'Token (optional)'))
+            ->add('isPublic', NULL, array('label' => 'is public ?', 'required' => FALSE))
+            ->add('email', 'email', array('constraints' => array(new NotNull(), new Email())));
     }
 
     /**
@@ -53,5 +56,6 @@ class JobType extends AbstractType
     {
         return "job";
     }
+
 }
 

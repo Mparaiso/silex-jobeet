@@ -58,6 +58,11 @@ class  CategoryService implements ObjectRepository
         return $this->class;
     }
 
+    function count()
+    {
+        return $this->em->createQuery("SELECT COUNT(c) FROM " . $this->class . " c ")->getSingleScalarResult();
+    }
+
     /**
      * Get categories that have a job associated with them
      * @return mixed
