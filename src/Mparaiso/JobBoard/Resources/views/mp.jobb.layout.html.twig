@@ -34,6 +34,11 @@
             {% include 'crud/includes/flash.html.twig' %}
         {% endblock %}
     </div>
+    <div class="row">
+        {% block history %}
+            {% include 'mp.jobb.history.html.twig' %}
+        {% endblock %}
+    </div>
     <div class="row main">
         {% block content %}{% endblock %}
     </div>

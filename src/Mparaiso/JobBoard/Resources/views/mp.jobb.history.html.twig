@@ -1,0 +1,14 @@
+{% set history =  app.session.get('job_history') %}
+{% if history is not null  %}
+    <ul class="inline small">
+        <small>Recent viewed jobs :</small>
+        {% for job in history %}
+            <small>
+                <a href="{{ path('job_detail',{company:job.company|slugify,id:job.id,location:job.location|slugify,position:job.position|slugify}) }}">{{ job }}</a>
+            </small>
+            {% if not loop.last %}
+                |
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endif %}

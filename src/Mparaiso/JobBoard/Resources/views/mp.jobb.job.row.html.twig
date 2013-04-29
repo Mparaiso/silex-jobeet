@@ -2,7 +2,7 @@
 <tr>
     <td>{{ job.location }}</td>
     <td>
-        <a href="{{ path('job_detail',{id:job.id,company:job.company|slugify,location:job.location|slugify,position:job.position|slugify}) }}">
+        <a class="job" href="{{ path('job_detail',{id:job.id,company:job.company|slugify,location:job.location|slugify,position:job.position|slugify}) }}">
             {{ job.position }}
         </a></td>
     <td><a href="#">{{ job.company }}</a></td>

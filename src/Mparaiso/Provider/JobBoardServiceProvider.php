@@ -39,7 +39,8 @@ class JobBoardServiceProvider implements ServiceProviderInterface {
                         "service" => $app['mp.jobb.service.job'],
                         "resourceName" => "job",
                         "templateLayout" => $app['mp.jobb.templates.crud.layout'],
-                        "propertyList" => array('category', 'position', 'location'),
+                        "propertyList" => array('id','category', 'position', 'location'),
+                        "orderList"=>array('id','position',"location"),
                         "beforeCreateEvent" => JobEvents::BEFORE_CREATE,
                         "beforeUpdateEvent" => JobEvents::BEFORE_UPDATE,
                     ));
@@ -51,6 +52,8 @@ class JobBoardServiceProvider implements ServiceProviderInterface {
                         "formClass" => $app['mp.jobb.form.category'],
                         "service" => $app['mp.jobb.service.category'],
                         "resourceName" => "category",
+                        "propertyList"=>array('id','name'),
+                        "orderList"=>array('id','name'),
                         "templateLayout" => $app['mp.jobb.templates.crud.layout']
                     ));
                 });
@@ -125,14 +128,14 @@ class JobBoardServiceProvider implements ServiceProviderInterface {
          */
         $app['mp.jobb.listener.job.after_create'] = $app->protect(
                 /**
-                 * FR :  créer le token et ajoute un flash message avec la valeur du token
+                 * FR :  créer le token et ajoute un message flash avec la valeur du token
                  * EN :  create the token and add a flash message with the token value
                  */
                 function(GenericEvent $event)use($app) {
                     if (isset($app["session"])) {
                         $job = $event->getSubject();
                         $app['session']->getFlashBag()
-                                ->add('info', ' publish the job offer with the following url : ' . $app['url_generator']
+                                ->add('info', "Manage your job offer with the following url : \n" . $app['url_generator']
                                         ->generate('job_edit', array("token" => $job->getToken()),true));
                     }
                 }

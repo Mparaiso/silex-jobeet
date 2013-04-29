@@ -26,6 +26,12 @@ class JobController
         $this->jobService = $jobService;
     }
 
+    /**
+     * @param \Silex\Application $app
+     * @param \Symfony\Component\HttpFoundation\Request $req
+     * @param type $format
+     * @return type
+     */
     function index(Application $app, Request $req, $format)
     {
         $limit = 10;
@@ -42,6 +48,12 @@ class JobController
     {
         $job = $this->jobService->find($id);
         $job === NULL AND $app->abort(404, "resource not found !");
+        $history = $app['session']->get('job_history', array());
+        if (!in_array(serialize($job), array_map('serialize',$history))) {
+            array_unshift($history, $job);
+            array_splice($history,3);
+        }
+        $app['session']->set('job_history', $history);
         return $app['twig']->render("mp.jobb.job.read.$format.twig", array(
             "job" => $job,
         ));
