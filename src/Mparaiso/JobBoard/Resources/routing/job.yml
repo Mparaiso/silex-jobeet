@@ -1,6 +1,6 @@
-job_principe:
-  path: "/"
-  defaults: { _controller: mp.jobb.controller.job:index  ,format: html }
+job_latest:
+  path: "/latest.{_format}"
+  defaults: { _controller: mp.jobb.controller.job:index  , _format: html }
 
 
 job_post:

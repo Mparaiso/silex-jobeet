@@ -50,3 +50,29 @@ mp_crud_category_update ANY      ANY    ANY  /admin/category/update/{id}
 mp_crud_category_delete ANY      ANY    ANY  /admin/category/delete/{id}
 mp_crud_category_read   ANY      ANY    ANY  /admin/category/{id}
 </pre>
+
+### TODO
+
++ <strike>Day 1: Starting up the Project</strike> DONE
++ <strike>Day 2: The Project</strike> DONE
++ <strike>Day 3: The Data Model</strike> DONE
++ Day 4: The Controller and the View
++ Day 5: The Routing
++ Day 6: More with the Model
++ Day 7: Playing with the Category Page
++ Day 8: The Unit Tests
++ Day 9: The Functional Tests
++ Day 10: The Forms
++ Day 11: Testing your Forms
++ Day 12: The Admin Generator
++ Day 13: The User
++ Day 14: Feeds
++ Day 15: Web Services
++ Day 16: The Mailer
++ Day 17: Search
++ Day 18: AJAX
++ Day 19: Internationalization and Localization
++ Day 20: The Plugins
++ Day 21: The Cache
++ Day 22: The Deployment
++ Day 23: Another Look at symfony

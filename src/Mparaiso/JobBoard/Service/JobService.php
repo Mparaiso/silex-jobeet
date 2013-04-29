@@ -102,6 +102,9 @@ class JobService implements ObjectRepository {
                         ->format("%r%a");
     }
 
+    function getLatestJob(){
+        return $this->em->getRepository($this->class)->findOneBy(array("isActivated"=>true,'isPublic'=>true),array("createdAt"=>"DESC"));
+    }
     function setTokenGen($callback) {
         $this->tokenGen = $callback;
     }

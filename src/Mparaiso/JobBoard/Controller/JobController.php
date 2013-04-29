@@ -32,13 +32,13 @@ class JobController
      * @param type $format
      * @return type
      */
-    function index(Application $app, Request $req, $format)
+    function index(Application $app, Request $req, $_format)
     {
         $limit = 10;
         $offset = 0;
-//        $jobs = $this->jobService->findBy(array("isActivated" => TRUE), array("createdAt" => "ASC"), $limit, $limit * $offset);
-        $jobs = $this->jobService->getActiveJobs();
-        return $app['twig']->render("mp.jobb.job.index.$format.twig", array(
+        $jobs = $this->jobService->findBy(array("isActivated" => TRUE), array("createdAt" => "ASC"), $limit, $limit * $offset);
+       // $jobs = $this->jobService->getActiveJobs();
+        return $app['twig']->render("mp.jobb.job.index.$_format.twig", array(
             "jobs" => $jobs,
         ));
     }
