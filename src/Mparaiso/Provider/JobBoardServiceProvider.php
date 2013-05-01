@@ -3,6 +3,7 @@
 namespace Mparaiso\Provider;
 
 use Silex\ServiceProviderInterface;
+use Mparaiso\JobBoard\Service\LuceneJobService;
 use Mparaiso\JobBoard\Service\AffiliateService;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Mparaiso\JobBoard\Controller\CategoryController;
@@ -77,6 +78,7 @@ class JobBoardServiceProvider implements ServiceProviderInterface
             $service = new JobService($app['mp.jobb.orm.em'], $app['mp.jobb.entity.job'],
                 $app['mp.jobb.entity.category']);
             $service->setTokenGen($app['mp.jobb.function.create_token']);
+            $service->setLuceneJobService($app['mp.jobb.lucene.job_service']);
             return $service;
         });
         $app['mp.jobb.service.category'] = $app->share(function ($app) {
@@ -89,7 +91,6 @@ class JobBoardServiceProvider implements ServiceProviderInterface
             return $service;
         });
 
-
         $app["mp.jobb.console"] = $app->share(function ($app) {
             return $app['console'];
         });
@@ -98,15 +99,12 @@ class JobBoardServiceProvider implements ServiceProviderInterface
             return $app['orm.em'];
         });
         $app['mp.jobb.entity.job'] = 'Mparaiso\JobBoard\Entity\Job';
-        $app['mp.jobb.form.job'] = 'Mparaiso\JobBoard\Form\JobType';
-
         $app['mp.jobb.entity.category'] = 'Mparaiso\JobBoard\Entity\Category';
-        $app['mp.jobb.form.category'] = 'Mparaiso\JobBoard\Form\CategoryType';
-
         $app['mp.jobb.entity.affiliate'] = 'Mparaiso\JobBoard\Entity\Affiliate';
+        # forms
+        $app['mp.jobb.form.job'] = 'Mparaiso\JobBoard\Form\JobType';
+        $app['mp.jobb.form.category'] = 'Mparaiso\JobBoard\Form\CategoryType';
         $app['mp.jobb.form.affiliate'] = 'Mparaiso\JobBoard\Form\AffiliateType';
-
-
         # doctrine mapped super classes
         $app["mp.jobb.doctrine.entity.base.path"] =
             __DIR__ . "/../JobBoard/Resources/doctrine-base/";
@@ -119,12 +117,17 @@ class JobBoardServiceProvider implements ServiceProviderInterface
         $app['mp.jobb.templates.path'] = __DIR__ . '/../JobBoard/Resources/views/';
         $app['mp.jobb.templates.layout'] = "mp.jobb.layout.html.twig";
         $app['mp.jobb.templates.crud.layout'] = "mp.jobb.crud.layout.html.twig";
+        # lucence configuration
+        $app['mp.jobb.lucene.job_service'] = $app->share(function ($app) {
+            return new LuceneJobService($app['mp.jobb.lucene.job.index.dir']);
+        });
+        $app['mp.jobb.lucene.job.index.dir'] = __DIR__ . '/../../../temp/lucene/job.index';
         # params
         $app['mp.jobb.params.title'] = "Job board";
         $app['mp.jobb.params.job_active_days'] = 30;
         $app['mp.jobb.params.max_jobs_on_homepage'] = 10;
         $app['mp.jobb.params.max_jobs_on_category'] = 20;
-        $app['mp.jobb.params.upload_dir'] = __DIR__ . '/../../../web/upload/';
+        $app['mp.jobb.params.upload_dir'] = __DIR__ . ' /../../../web/upload/';
         $app['mp.jobb.params.upload_server_path'] = "/upload/";
         /**
          * TWIG CONFIGURATION
@@ -133,7 +136,7 @@ class JobBoardServiceProvider implements ServiceProviderInterface
             /* @var $twig \Twig_Environment */
             #@note FR : créer un filter twig
             $twig->addFilter(new \Twig_SimpleFilter("slugify", function ($string, $separator = "-") {
-                return preg_replace('/[^\w\d]/i', $separator, $string);
+                return preg_replace(' /[^\w\d]/i', $separator, $string);
             }));
             $twig->addFilter(new \Twig_SimpleFilter("floor", function ($float) {
                 if (!is_float($float))
@@ -187,14 +190,11 @@ class JobBoardServiceProvider implements ServiceProviderInterface
                 }
             }
         );
-        $app['mp.jobb.function.create_token'] = $app->protect(function ($entity) {
-                return sha1($job->getEmail() . md5(uniqid()));
+        $app['mp.jobb.function.create_token'] = $app->protect(function ($email) {
+                return sha1($email . md5(uniqid()));
             }
         );
-        $app['mp.jobb.function.create_token'] = $app->protect(function (BaseJob $job) {
-                return sha1($job->getEmail() . md5(uniqid()));
-            }
-        );
+
     }
 
     /**

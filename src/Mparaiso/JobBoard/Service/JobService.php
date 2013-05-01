@@ -3,17 +3,27 @@
 namespace Mparaiso\JobBoard\Service;
 
 use Doctrine\Common\Persistence\ObjectRepository;
+use ZendSearch\Lucene\Document\Field;
+use ZendSearch\Lucene\Document;
 use DateInterval;
 use DateTime;
 use Mparaiso\JobBoard\Entity\Base\Job as BaseJob;
 use Doctrine\ORM\EntityManager;
+use ZendSearch\Lucene\Lucene;
+
 
 class JobService implements ObjectRepository
 {
-
+    /**
+     * @var string
+     */
     protected $em;
     protected $class;
     protected $tokenGen;
+    /**
+     * @var LuceneJobService
+     */
+    protected $luceneJobService;
 
     function count()
     {
@@ -27,9 +37,23 @@ class JobService implements ObjectRepository
         $this->categoryClass = $categoryClass;
     }
 
+    public function setLuceneJobService(LuceneJobService $luceneJobService)
+    {
+        $this->luceneJobService = $luceneJobService;
+    }
+
+    /**
+     * @return LuceneJobService
+     */
+    public function getLuceneJobService()
+    {
+        return $this->luceneJobService;
+    }
+
     function delete(BaseJob $job, $flush = TRUE)
     {
         $this->em->remove($job);
+        $this->luceneJobService->deleteJobInLucenceIndex($job);
         $flush AND $this->em->flush();
         return $job;
     }
@@ -51,7 +75,23 @@ class JobService implements ObjectRepository
             $job->setCreatedAt(new DateTime());
         }
         $this->em->persist($job);
+        // update lucene index or delete it if the job is not activated
+        if ($this->isExpired($job) || $job->getIsActivated() === FALSE) {
+            $this->luceneJobService->deleteJobInLucenceIndex($job);
+        } else {
+            $this->luceneJobService->updateLuceneIndex($job);
+
+        }
         $flush AND $this->em->flush();
+        return $job;
+    }
+
+    function activateAndSaveJob(BaseJob $job, $flush = TRUE)
+    {
+        if (!$this->isExpired($job)) {
+            $job->setIsActivated(TRUE);
+            $this->save($job);
+        }
         return $job;
     }
 
@@ -127,5 +167,8 @@ class JobService implements ObjectRepository
     {
         $this->tokenGen = $callback;
     }
+
+
+
 
 }
