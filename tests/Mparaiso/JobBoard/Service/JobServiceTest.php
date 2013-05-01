@@ -23,9 +23,7 @@ class JobServiceTest extends WebTestCase
         $f = $l->parse();
         $this->assertTrue(is_array($f));
         $this->assertTrue(isset($f['job_sensio_labs']));
-        $s = new JobService($this->app['orm.em'],
-            'Mparaiso\JobBoard\Entity\Job',
-            'Mparaiso\JobBoard\Entity\Category');
+        $s = $this->app['mp.jobb.service.job'];
         $s->save($f['job_sensio_labs']);
         $this->assertTrue(is_int($f['job_sensio_labs']->getId()));
         $this->assertTrue($f['job_sensio_labs']->getId() != NULL);
