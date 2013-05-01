@@ -2,13 +2,15 @@
 <html lang="en-US">
 <head>
     <meta charset="UTF-8">
-    <title>{%  block title app['mp.jobb.params.title'] %} </title>
+    <title>{% block title app['mp.jobb.params.title'] %} </title>
     <link rel="stylesheet"
           href="{{ app.request.baseUrl }}/static/bootstrap/css/bootstrap.min.css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="{{ app.request.baseUrl }}/static/css/style.css">
+    {% block mp_jobb_feed %}
     <link rel="alternate" type="application/atom+xml" title="Latest Jobs"
-          href="{{url('job_latest',{_format: "atom" })}}" />
+          href="{{ url('job_latest',{_format: "atom" }) }}"/>
+    {% endblock %}
 
 </head>
 <body>
@@ -25,7 +27,7 @@
                     </form>
                 </li>
                 <li><a href="{{ path('job_post') }}">Post a Job</a></li>
-                <li><a href="{{ path('mp_crud_job_index')}}">Administration</a></li>
+                <li><a href="{{ path('mp_crud_job_index') }}">Administration</a></li>
             </ul>
         </div>
     </div>
@@ -42,7 +44,10 @@
         {% endblock %}
     </div>
     <div class="row main">
-        {% block content %}{% endblock %}
+        {% block content %}
+            {% block mp_jobb_content %}
+            {% endblock %}
+        {% endblock %}
     </div>
     <hr>
     <div class="row font75">
@@ -50,7 +55,8 @@
         <ul class="nav inline pull-right">
             <li><a href="#">About Job Board</a></li>
             <li><a href="{{ path('job_latest',{_format: "atom" }) }}"><img
-                    src="{{ app.request.baseUrl }}/static/img/rss.png" style='vertical-align: baseline;' alt="rss icon" width="10" height="10"> Full Feed</a></li>
+                    src="{{ app.request.baseUrl }}/static/img/rss.png" style='vertical-align: baseline;' alt="rss icon"
+                    width="10" height="10"> Full Feed</a></li>
             <li><a href="#">Job Board API</a></li>
             <li><a href="#">Affiliates</a></li>
         </ul>

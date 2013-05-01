@@ -1,0 +1,18 @@
+{# /src/Mparaiso/JobBoard/Resources/views/mp.jobb.category.read.atom.twig #}
+{#{% spaceless %}#}
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>{{ app['mp.jobb.params.title'] }}</title>
+    <subtitle>Latest Jobs in {{ category.name }} Category</subtitle>
+    <link href="{{ url('category_read',{_format: "atom",id:category.id,name:category.name}) }}" rel="self"/>
+    <link href="{{ url('category_read',{_format: "atom",id:category.id,name:category.name}) }}"/>
+    <updated>{{ category.jobs.first().createdAt |date('c') }}</updated>
+    <author>
+        <name>Job board</name>
+    </author>
+    <id>{{ url('category_read',{ _format: "atom",id:category.id,name:category.name} ) }}</id>
+    {% for job in category.jobs %}
+        {% include 'mp.jobb.job.atom.entry.xml.twig' with {job:job} %}
+    {% endfor %}
+</feed>
+{#{% endspaceless %}#}

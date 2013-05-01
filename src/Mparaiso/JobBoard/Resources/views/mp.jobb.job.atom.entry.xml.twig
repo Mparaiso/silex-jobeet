@@ -1,0 +1,20 @@
+{# /src/Mparaiso/JobBoard/Resources/views/mp.jobb.job.latest.atom.twig #}
+<entry>
+    <title>{{ job.position }} @{{ job.company }} ({{ job.location }})</title>
+    <link href="{{ url('job_detail',{position:job.position|slugify,id:job.id,location:job.location|slugify,company:job.company|slugify}) }}"/>
+    <id>{{ url('job_detail',{position:job.position|slugify,id:job.id,location:job.location|slugify,company:job.company|slugify}) }}</id>
+    <updated>{{ job.updatedAt|date('c') }}</updated>
+    <summary type="xhtml">
+    <div xmlns="http://www.w3.org/1999/xhtml">
+        {% if job.logo is not null %}
+            <div><a href="{{ url('job_detail',{position:job.position|slugify,id:job.id,location:job.location|slugify,company:job.company|slugify}) }}"><img src="{{ app.request.getUriForPath('') }}/upload/{{ job.logo }}" alt="{{ job.company }} logo"/></a></div>
+        {% endif %}
+        <p>{{ job.description|nl2br }}</p>
+        <h4>How to apply?</h4>
+        <p>{{ job.howToApply }}</p>
+    </div>
+    </summary>
+    <author>
+        <name>{{ job.company }}</name>
+    </author>
+</entry>

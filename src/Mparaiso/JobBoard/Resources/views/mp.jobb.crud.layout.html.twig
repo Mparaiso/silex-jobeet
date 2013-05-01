@@ -1,11 +1,14 @@
 {# mp.jobb.job.index.html.twig #}
 {% extends app['mp.jobb.templates.layout'] %}
-{% block content %}
+{% block mp_jobb_content %}
     <h2>Admin</h2>
     <ul class="inline">
         <li><a href="{{ path("mp_crud_job_index") }}">Jobs</a></li>
         <li>|</li>
         <li><a href="{{ path("mp_crud_category_index") }}">Categories</a></li>
+        <li>|</li>
+        <li><a href="{{ path("mp_crud_affiliate_index") }}">Affiliates</a></li>
+
     </ul>
     {% block mp_crud_content %}
     {% endblock %}

@@ -1,6 +1,6 @@
 {# mp.jobb.job.index.html.twig #}
 {% extends app['mp.jobb.templates.layout'] %}
-{% block content %}
+{% block mp_jobb_content %}
     <h3>Latest Jobs</h3>
     <table class="table table-striped">
         <tbody>
@@ -8,7 +8,8 @@
             <tr>
                 <th colspan="4">
                     <a href="{{ path('category_read',{id:category.id,name:category.name|slugify}) }}">{{ category }}</a> <span
-                        class="pull-right muted"><small><a href="#">feed</a></small></span>
+                        class="pull-right muted"><small><a href="{{ path('category_read',{ id:category.id,name:category.name, _format: "atom" }) }}"><img
+                        src="{{ app.request.baseUrl }}/static/img/rss.png" style='vertical-align: baseline;' alt="rss icon" width="10" height="10"> feed</a></small></span>
                 </th>
             </tr>
 

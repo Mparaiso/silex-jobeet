@@ -1,20 +1,18 @@
 {# /src/Mparaiso/JobBoard/Resources/views/mp.jobb.job.latest.atom.twig #}
+{#{% spaceless %}#}
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>{{ app['mp.jobb.params.title'] }}</title>
     <subtitle>Latest Jobs</subtitle>
     <link href="{{ url('job_latest',{_format: "atom"}) }}" rel="self"/>
-    <link href="{{ url('job_latest') }}"/>
+    <link href="{{ url('job_latest',{_format: "atom"}) }}"/>
     <updated>{{ app['mp.jobb.service.job'].getLatestJob().createdAt |date('c') }}</updated>
-    <author><name>Jobeet</name></author>
+    <author>
+        <name>Jobeet</name>
+    </author>
     <id>{{ url('job_latest',{_format: "atom"}) }}</id>
-
-    <entry>
-        <title>Job title</title>
-        <link href="" />
-        <id>Unique id</id>
-        <updated></updated>
-        <summary>Job description</summary>
-        <author><name>Company</name></author>
-    </entry>
+    {% for job in jobs %}
+        {% include 'mp.jobb.job.atom.entry.xml.twig' with {job:job} %}
+    {% endfor %}
 </feed>
+{#{% endspaceless %}#}

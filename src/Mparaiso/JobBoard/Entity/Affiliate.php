@@ -44,7 +44,7 @@ class Affiliate extends BaseAffiliate
      * @param \Mparaiso\JobBoard\Entity\Category $categories
      * @return Affiliate
      */
-    public function addCategorie(\Mparaiso\JobBoard\Entity\Category $categories)
+    public function addCategory(\Mparaiso\JobBoard\Entity\Category $categories)
     {
         $this->categories[] = $categories;
 
@@ -56,7 +56,7 @@ class Affiliate extends BaseAffiliate
      *
      * @param \Mparaiso\JobBoard\Entity\Category $categories
      */
-    public function removeCategorie(\Mparaiso\JobBoard\Entity\Category $categories)
+    public function removeCategory(\Mparaiso\JobBoard\Entity\Category $categories)
     {
         $this->categories->removeElement($categories);
     }

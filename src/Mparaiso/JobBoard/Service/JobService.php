@@ -8,31 +8,36 @@ use DateTime;
 use Mparaiso\JobBoard\Entity\Base\Job as BaseJob;
 use Doctrine\ORM\EntityManager;
 
-class JobService implements ObjectRepository {
+class JobService implements ObjectRepository
+{
 
     protected $em;
     protected $class;
     protected $tokenGen;
 
-    function count() {
+    function count()
+    {
         return $this->em->createQuery("SELECT count(j) FROM $this->class j ")->getSingleScalarResult();
     }
 
-    function __construct(EntityManager $em, $class, $categoryClass) {
+    function __construct(EntityManager $em, $class, $categoryClass)
+    {
         $this->em = $em;
         $this->class = $class;
         $this->categoryClass = $categoryClass;
     }
 
-    function delete(BaseJob $job, $flush = TRUE) {
+    function delete(BaseJob $job, $flush = TRUE)
+    {
         $this->em->remove($job);
         $flush AND $this->em->flush();
         return $job;
     }
 
-    function save(BaseJob $job, $flush = TRUE) {
+    function save(BaseJob $job, $flush = TRUE)
+    {
         if ($job->getToken() === NULL) {
-            $job->setToken(call_user_func($this->tokenGen, $job));
+            $job->setToken(call_user_func($this->tokenGen, $job->getEmail()));
         }
         // update expiration date
         if ($job->getIsActivated() === NULL) {
@@ -50,7 +55,8 @@ class JobService implements ObjectRepository {
         return $job;
     }
 
-    function getActiveJobs() {
+    function getActiveJobs()
+    {
         return $this->em->createQuery("
         SELECT j FROM $this->class j
         JOIN $this->categoryClass c
@@ -59,35 +65,44 @@ class JobService implements ObjectRepository {
         ")->execute();
     }
 
-    function find($id) {
+    function find($id)
+    {
         return $this->em->find($this->class, $id);
     }
 
-    function findAll(array $criteria = array(), array $orderBy = array(), $limit = NULL, $offset = NULL) {
+    function findAll(array $criteria = array(), array $orderBy = array(), $limit = NULL, $offset = NULL)
+    {
         return $this->em->getRepository($this->class)->findBy($criteria, $orderBy, $limit, $offset);
     }
 
-    function findBy(array $criteria, array $orderBy = NULL, $limit = NULL, $offset = NULL) {
+    function findBy(array $criteria, array $orderBy = NULL, $limit = NULL, $offset = NULL)
+    {
         return $this->em->getRepository($this->class)->findBy($criteria, $orderBy, $limit, $offset);
     }
 
-    function findOneBy(array $criteria) {
+    function findOneBy(array $criteria)
+    {
         return $this->em->getRepository($this->class)->findOneBy($criteria);
     }
 
-    function getClassName() {
+    function getClassName()
+    {
         return $this->class;
     }
 
     /**
      * HELPER METHODS
      */
-    function isExpired(BaseJob $job) {
-        return (int) $this->getDaysBeforeExpires($job) < 0;
+
+
+    function isExpired(BaseJob $job)
+    {
+        return (int)$this->getDaysBeforeExpires($job) < 0;
     }
 
-    function expiresSoon(BaseJob $job) {
-        return (int) $this->getDaysBeforeExpires($job) < 5;
+    function expiresSoon(BaseJob $job)
+    {
+        return (int)$this->getDaysBeforeExpires($job) < 5;
     }
 
     /**
@@ -96,16 +111,20 @@ class JobService implements ObjectRepository {
      * @param \Mparaiso\JobBoard\Entity\Base\Job $job
      * @return int
      */
-    function getDaysBeforeExpires(BaseJob $job) { #@note @php différence entre 2 dates
+    function getDaysBeforeExpires(BaseJob $job)
+    { #@note @php différence entre 2 dates
         $now = new DateTime;
         return $now->diff($job->getExpiresAt())
-                        ->format("%r%a");
+            ->format("%r%a");
     }
 
-    function getLatestJob(){
-        return $this->em->getRepository($this->class)->findOneBy(array("isActivated"=>true,'isPublic'=>true),array("createdAt"=>"DESC"));
+    function getLatestJob()
+    {
+        return $this->em->getRepository($this->class)->findOneBy(array("isActivated" => TRUE, 'isPublic' => TRUE), array("createdAt" => "DESC"));
     }
-    function setTokenGen($callback) {
+
+    function setTokenGen($callback)
+    {
         $this->tokenGen = $callback;
     }
 

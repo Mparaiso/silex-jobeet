@@ -36,13 +36,13 @@ class CategoryController {
      * @param type $id
      * @return type
      */
-    function read(Request $req, Application $app, $format, $name, $id) {
+    function read(Request $req, Application $app, $_format, $name, $id) {
         $limit = $app['mp.jobb.params.max_jobs_on_category'];
         $offset = $req->query->get("offset", 0);
         $category = $app['mp.jobb.service.category']->find($id);
-        $jobs = $app['mp.jobb.service.job']->findBy(array('isActivated' => TRUE, "category" => $category), array(), $limit, $limit * $offset);
+        $jobs = $app['mp.jobb.service.job']->findBy(array('isActivated' => TRUE, "category" => $category), array("createdAt"=>"DESC"), $limit, $limit * $offset);
         $total = $app["mp.jobb.service.category"]->countActiveJobsByCategory($category);
-        return $app['twig']->render("mp.jobb.category.read.$format.twig", array(
+        return $app['twig']->render("mp.jobb.category.read.$_format.twig", array(
                     "category" => $category,
                     "jobs" => $jobs,
                     "total" => $total,

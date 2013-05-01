@@ -92,3 +92,24 @@ fixtures:
         expiresAt:   { datetime : 2005-12-01 }
         token:        job_expired
         email:        job@example.com
+
+  - entity: Mparaiso\JobBoard\Entity\Affiliate
+    name: sensio labs
+    fields:
+      url: http://www.sensio-labs.com/
+      email: fabien.potencier@example.com
+      isActive: true
+      token: sensio_labs
+      createdAt: {datetime: 2013-02-02 }
+      categories: [programming]
+
+  - entity: Mparaiso\JobBoard\Entity\Affiliate
+    name: symfony
+    fields:
+      url: /
+      isActive: true
+      createdAt: {datetime: 2013-04-02 }
+      email: fabien.potencier@example.org
+      token: symfony
+      categories: [design,programming]
+

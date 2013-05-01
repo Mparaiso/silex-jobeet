@@ -4,7 +4,6 @@ home:
   defaults: { _controller: mp.jobb.controller.category:index , format: html }
 
 
-
 job_post:
   path: /jobs/create
   defaults: { _controller: mp.jobb.controller.job:create ,format:html }
@@ -26,3 +25,7 @@ admin_job:
 admin_category:
   prefix: /admin/category
   resource: admin_category.yml
+
+admin_affiliate:
+  prefix:  /admin/affiliate
+  resource: admin_affiliate.yml

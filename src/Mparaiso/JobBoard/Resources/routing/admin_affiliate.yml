@@ -1,0 +1,27 @@
+# routes
+mp_crud_affiliate_index:
+  path: "/"
+  defaults: { _controller: "mp.jobb.controller.admin.affiliate:index" ,format:  "html" }
+
+mp_crud_affiliate_create:
+  path: "/create"
+  defaults: { _controller: "mp.jobb.controller.admin.affiliate:create" ,format: "html" }
+
+mp_crud_affiliate_update:
+  path: "/update/{id}"
+  defaults: { _controller: "mp.jobb.controller.admin.affiliate:update" , format: "html" }
+  requirements:
+    id: "\d+"
+
+mp_crud_affiliate_delete:
+  path: "/delete/{id}"
+  defaults: { _controller: "mp.jobb.controller.admin.affiliate:delete" , format: "html" }
+  requirements:
+    id: "\d+"
+
+mp_crud_affiliate_read:
+  path: "/{id}"
+  defaults: { _controller: "mp.jobb.controller.admin.affiliate:read" , format: "html" }
+  requirements:
+    id: "\d+"
+

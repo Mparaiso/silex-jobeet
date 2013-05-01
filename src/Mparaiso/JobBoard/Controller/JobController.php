@@ -36,7 +36,7 @@ class JobController
     {
         $limit = 10;
         $offset = 0;
-        $jobs = $this->jobService->findBy(array("isActivated" => TRUE), array("createdAt" => "ASC"), $limit, $limit * $offset);
+        $jobs = $this->jobService->findBy(array("isActivated" => TRUE), array("updatedAt" => "DESC"), $limit, $limit * $offset);
        // $jobs = $this->jobService->getActiveJobs();
         return $app['twig']->render("mp.jobb.job.index.$_format.twig", array(
             "jobs" => $jobs,

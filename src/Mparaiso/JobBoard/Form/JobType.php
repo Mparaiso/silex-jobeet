@@ -27,11 +27,11 @@ class JobType extends AbstractType
             'constraints' => array(new NotNull(), new Length(array('min' => 4, "max" => 255)))))
             ->add('company', NULL, array(
             'constraints' => array(new NotNull(), new Length(array('min' => 3, 'max' => 255)))))
-           // ->add('logo',null,array('required'=>false))
+        // ->add('logo',null,array('required'=>false))
             ->add('logo_file', "file", array('attr'   => array('accept' => 'image/*'),
                                              'mapped' => FALSE, 'required' => FALSE, 'constraints' => array(
                 new File(array("maxSize" => '300k', "mimeTypes" => array('image/*'))))))
-            ->add('url', NULL, array('label'=>'Url (optional)','required' => FALSE, 'constraints' => array(
+            ->add('url', NULL, array('label' => 'Url (optional)', 'required' => FALSE, 'constraints' => array(
             new Url())))
             ->add('type', 'choice', array(
             "choices" => self::$type, 'constraints' => array(
@@ -39,10 +39,12 @@ class JobType extends AbstractType
             )))
             ->add('location', NULL, array(
             'constraints' => array(new NotNull(), new Length(array('min' => 3, 'max' => 255)))))
-            ->add('description', NULL, array('data'=>'the job offer description',
-            'constraints' => array(new NotNull(), new Length(array('min' => 3, 'max' => 500)))))
-            ->add('howToApply', NULL, array('data'=>'how to apply the job','label' => "How to apply ?", "constraints" => array(new NotNull())))
-            ->add('token',null,array('required'=>false,'label'=>'Token (optional)'))
+            ->add('description', NULL, array('data'        => 'the job offer description',
+                                             'constraints' => array(new NotNull(),
+                                                 new Length(array('min' => 3, 'max' => 500)))))
+            ->add('howToApply', NULL, array('data'        => 'how to apply the job', 'label' => "How to apply ?",
+                                            "constraints" => array(new NotNull())))
+            ->add('token', NULL, array('required' => FALSE, 'label' => 'Token (optional)'))
             ->add('isPublic', NULL, array('label' => 'is public ?', 'required' => FALSE))
             ->add('email', 'email', array('constraints' => array(new NotNull(), new Email())));
     }

@@ -1,6 +1,6 @@
 {# mp.jobb.job.read.html.twig #}
 {% extends app['mp.jobb.templates.layout'] %}
-{% block content %}
+{% block mp_jobb_content %}
     {% if job is not null %}
         {% if token is defined %}
             {% include 'mp.jobb.job.admin_menu.html.twig' with {job:job} %}
@@ -11,7 +11,7 @@
         </h4>
         <div class="row">
             <div class="span8">
-                {{ job.description }}
+                {{ job.description|nl2br }}
             </div>
             <div class="span4">
                 <img src="{{ mp_jobb_get_path(job.logo)|default('http://placehold.it/200x100&text=Company+Logo') }}"
@@ -19,7 +19,7 @@
             </div>
         </div>
         <h5>How to apply?</h5>
-        <div>{{ job.howToApply }}</div>
+        <div>{{ job.howToApply|nl2br }}</div>
         <div class="pull-right muted">
             <small><i>Posted on {{ job.createdAt|date('Y-m-d') }}</i></small>
         </div>

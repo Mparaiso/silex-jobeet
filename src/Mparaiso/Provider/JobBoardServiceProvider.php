@@ -3,6 +3,7 @@
 namespace Mparaiso\Provider;
 
 use Silex\ServiceProviderInterface;
+use Mparaiso\JobBoard\Service\AffiliateService;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Mparaiso\JobBoard\Controller\CategoryController;
 use Mparaiso\JobBoard\Service\CategoryService;
@@ -47,7 +48,19 @@ class JobBoardServiceProvider implements ServiceProviderInterface
                 "beforeUpdateEvent" => JobEvents::BEFORE_UPDATE,
             ));
         });
-
+        $app['mp.jobb.controller.admin.affiliate'] = $app->share(function ($app) {
+            return new CRUD(array(
+                "entityClass"    => $app['mp.jobb.entity.affiliate'],
+                "formClass"      => $app['mp.jobb.form.affiliate'],
+                "service"        => $app['mp.jobb.service.affiliate'],
+                "resourceName"   => "affiliate",
+                "templateLayout" => $app['mp.jobb.templates.crud.layout'],
+                //"propertyList"      => array('id', 'category', 'position', 'location'),
+                //"orderList"         => array('id', 'position', "location"),
+                //"beforeCreateEvent" => JobEvents::BEFORE_CREATE,
+                //"beforeUpdateEvent" => JobEvents::BEFORE_UPDATE,
+            ));
+        });
         $app['mp.jobb.controller.admin.category'] = $app->share(function ($app) {
             return new CRUD(array(
                 "entityClass"    => $app['mp.jobb.entity.category'],
@@ -61,13 +74,22 @@ class JobBoardServiceProvider implements ServiceProviderInterface
         });
         # entity services
         $app['mp.jobb.service.job'] = $app->share(function ($app) {
-            $service = new JobService($app['mp.jobb.orm.em'], $app['mp.jobb.entity.job'], $app['mp.jobb.entity.category']);
+            $service = new JobService($app['mp.jobb.orm.em'], $app['mp.jobb.entity.job'],
+                $app['mp.jobb.entity.category']);
             $service->setTokenGen($app['mp.jobb.function.create_token']);
             return $service;
         });
         $app['mp.jobb.service.category'] = $app->share(function ($app) {
             return new CategoryService($app['mp.jobb.orm.em'], $app['mp.jobb.entity.category'], $app['mp.jobb.entity.job']);
         });
+        $app['mp.jobb.service.affiliate'] = $app->share(function ($app) {
+            $service = new AffiliateService($app['mp.jobb.orm.em'], $app['mp.jobb.entity.affiliate'],
+                $app['mp.jobb.entity.job'], $app['mp.jobb.entity.category']);
+            $service->setTokenStrategy($app['mp.jobb.function.create_token']);
+            return $service;
+        });
+
+
         $app["mp.jobb.console"] = $app->share(function ($app) {
             return $app['console'];
         });
@@ -82,6 +104,8 @@ class JobBoardServiceProvider implements ServiceProviderInterface
         $app['mp.jobb.form.category'] = 'Mparaiso\JobBoard\Form\CategoryType';
 
         $app['mp.jobb.entity.affiliate'] = 'Mparaiso\JobBoard\Entity\Affiliate';
+        $app['mp.jobb.form.affiliate'] = 'Mparaiso\JobBoard\Form\AffiliateType';
+
 
         # doctrine mapped super classes
         $app["mp.jobb.doctrine.entity.base.path"] =
@@ -116,7 +140,7 @@ class JobBoardServiceProvider implements ServiceProviderInterface
                     throw new \Exception("value must be a float");
                 return floor($float);
             }));
-            $twig->addFilter(new \Twig_SimpleFilter("sha1","sha1"));
+            $twig->addFilter(new \Twig_SimpleFilter("sha1", "sha1"));
             $twig->addFunction(new \Twig_SimpleFunction("mp_jobb_get_path", function ($id) use ($app) {
                 $realfile = $app['mp.jobb.params.upload_dir'] . $id;
                 if (file_exists($realfile) && is_file($realfile)) {
@@ -161,6 +185,10 @@ class JobBoardServiceProvider implements ServiceProviderInterface
                     );
                     $job->setLogo($logoFileName);
                 }
+            }
+        );
+        $app['mp.jobb.function.create_token'] = $app->protect(function ($entity) {
+                return sha1($job->getEmail() . md5(uniqid()));
             }
         );
         $app['mp.jobb.function.create_token'] = $app->protect(function (BaseJob $job) {

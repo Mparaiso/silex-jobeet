@@ -152,7 +152,6 @@ class Affiliate
     /**
      * @var boolean
      */
-    private $isActive;
-
+    protected $isActive;
 
 }

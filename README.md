@@ -56,9 +56,9 @@ mp_crud_category_read   ANY      ANY    ANY  /admin/category/{id}
 + <strike>Day 1: Starting up the Project</strike> DONE
 + <strike>Day 2: The Project</strike> DONE
 + <strike>Day 3: The Data Model</strike> DONE
-+ Day 4: The Controller and the View
-+ Day 5: The Routing
-+ Day 6: More with the Model
++ <strike>Day 4: The Controller and the View</strike> DONE
++ <strike>Day 5: The Routing</strike> DONE
++ <strike>Day 6: More with the Model</strike> DONE
 + Day 7: Playing with the Category Page
 + Day 8: The Unit Tests
 + Day 9: The Functional Tests
@@ -66,7 +66,7 @@ mp_crud_category_read   ANY      ANY    ANY  /admin/category/{id}
 + Day 11: Testing your Forms
 + Day 12: The Admin Generator
 + Day 13: The User
-+ Day 14: Feeds
++ <strike>Day 14: Feeds</strike> DONE
 + Day 15: Web Services
 + Day 16: The Mailer
 + Day 17: Search
